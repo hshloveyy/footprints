@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2014-11-29 12:14:14 by Hibernate Tools 3.2.2.GA -->
+<hibernate-mapping>
+    <class name="com.mvc.footprints.entity.PreUcenterMembers" table="pre_ucenter_members" catalog="isbbsdatabase">
+<!--     <class name="com.mvc.footprints.entity.PreUcenterMembers" table="pre_ucenter_members" catalog="footprints"> -->
+        <id name="uid" type="java.lang.Integer">
+            <column name="uid" />
+            <generator class="identity" />
+        </id>
+        <property name="username" type="string">
+            <column name="username" length="15" not-null="true" unique="true" />
+        </property>
+        <property name="password" type="string">
+            <column name="password" length="32" not-null="true" />
+        </property>
+        <property name="email" type="string">
+            <column name="email" length="32" not-null="true" />
+        </property>
+        <property name="myid" type="string">
+            <column name="myid" length="30" not-null="true" />
+        </property>
+        <property name="myidkey" type="string">
+            <column name="myidkey" length="16" not-null="true" />
+        </property>
+        <property name="regip" type="string">
+            <column name="regip" length="15" not-null="true" />
+        </property>
+        <property name="regdate" type="int">
+            <column name="regdate" not-null="true" />
+        </property>
+        <property name="lastloginip" type="int">
+            <column name="lastloginip" not-null="true" />
+        </property>
+        <property name="lastlogintime" type="int">
+            <column name="lastlogintime" not-null="true" />
+        </property>
+        <property name="salt" type="string">
+            <column name="salt" length="6" not-null="true" />
+        </property>
+        <property name="secques" type="string">
+            <column name="secques" length="8" not-null="true" />
+        </property>
+        <property name="sex" type="string">
+        	<column name="sex" length="2"></column>
+        </property>
+        <property name="photoImgId" type="string">
+        	<column name="photo_img_id" length="20"></column>
+        </property>
+        <property name="mobilePhone" type="string">
+        	<column name="mobile_phone" length="20"></column>
+        </property>
+        <property name="areaId" type="string">
+        	<column name="area" length="20"></column>
+        </property>
+        <property name="age" type="int">
+        	<column name="age" length="20"></column>
+        </property>
+        <property name="star" type="string">
+        	<column name="star" length="20"></column>
+        </property>
+    </class>
+</hibernate-mapping>
