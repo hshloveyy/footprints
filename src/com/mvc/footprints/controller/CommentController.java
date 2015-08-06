@@ -281,7 +281,7 @@ public class CommentController {
 				commentLike.setCreateTime(DateFormatUtils.format(now, Constant.DATETIME));
 				commentLike.setLastTime(DateFormatUtils.format(now, Constant.DATETIME));
 				commentLike.setMillsecond(now.getTime()+"");
-				commentLike.setIsClick(CLICKED);
+				commentLike.setIsClick(UNCLICK);
 			}else{//用户有对该店铺点过赞
 				if(like == -1 || !DateUtils.isSameMonth(now, new Date(Long.valueOf(commentLike.getMillsecond()))) || commentLike.getIsClick() == 1){
 					commentLike.setLastTime(DateFormatUtils.format(now, Constant.DATETIME));
