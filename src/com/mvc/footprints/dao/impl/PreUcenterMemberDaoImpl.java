@@ -28,8 +28,14 @@ public class PreUcenterMemberDaoImpl extends BaseDaoImpl implements IPreUcenterM
 	}
 
 	@Override
-	public PreUcenterMembers findUserByParam(PreUcenterMembers members) {
-		return null;
+	public PreUcenterMembers findUserByParam(final PreUcenterMembers members) {
+		return getHibernateTemplate().execute(new HibernateCallback<PreUcenterMembers>() {
+			@Override
+			public PreUcenterMembers doInHibernate(Session arg0)
+					throws HibernateException, SQLException {
+				return (PreUcenterMembers) arg0.createQuery("from PreUcenterMembers where username = '" + members.getUsername().trim() + "'").uniqueResult();
+			}
+		});
 	}
 
 	@Override

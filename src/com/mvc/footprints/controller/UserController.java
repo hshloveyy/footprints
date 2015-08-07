@@ -69,6 +69,31 @@ public class UserController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/verifyusername")
+	public String verifyUsername(String username) {
+		JsonResult jsonResult = new JsonResult();
+		try {
+			PreUcenterMembers param = new PreUcenterMembers();
+			param.setUsername(username);
+			PreUcenterMembers member = userService.findUserByParam(param);
+			if(member == null){
+				jsonResult.setCode(Constant.SUCCESS);
+				jsonResult.setMsg("此用户名可以使用");
+				jsonResult.setResult(true);
+			}else{
+				jsonResult.setCode(Constant.USER_REGIST_IS_EXIST);
+				jsonResult.setMsg("用户名已存在");
+				jsonResult.setResult(true);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setResult(false);
+		}
+		return JSONObject.fromObject(jsonResult).toString();
+	}
+	
+	@ResponseBody
 	@RequestMapping(value="/verifyPhone")
 	public String verifyPhone(String phoneNumber) {
 		JsonResult jsonResult = new JsonResult();

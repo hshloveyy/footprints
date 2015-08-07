@@ -31,13 +31,13 @@ public class UserServiceImpl implements IUserService {
 		PreUcenterMembers preUcenterMember = null;
 		JsonResult jsonResult = new JsonResult();
 		List<Object> ucList = preUcenterMemberDao
-				.createQuery("from PreUcenterMembers pum where pum.username = ?", new Object[]{username});
+				.createQuery("from PreUcenterMembers pum where pum.username = ? or pum.mobilePhone = ?", new Object[]{username, username});
 		if(ucList.size() > 0){
 			preUcenterMember = (PreUcenterMembers)ucList.get(0);
 			if(preUcenterMember != null){
 				String md5Pwd = MD5Utils.generatePassword(MD5Utils.generatePassword(password) + preUcenterMember.getSalt());
 				List<Object> list = preUcenterMemberDao
-						.createQuery("from PreUcenterMembers pum where pum.username = ? and pum.password = ?", new Object[]{username, md5Pwd});
+						.createQuery("from PreUcenterMembers pum where (pum.username = ? and pum.password = ?) or (pum.mobilePhone = ? and pum.password = ?)", new Object[]{username, md5Pwd, username, md5Pwd});
 				if(list.size() > 0){
 					preUcenterMember = (PreUcenterMembers)list.get(0);
 					jsonResult.setObj(preUcenterMember);
