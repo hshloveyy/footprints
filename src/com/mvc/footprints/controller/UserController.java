@@ -74,7 +74,7 @@ public class UserController {
 		JsonResult jsonResult = new JsonResult();
 		try {
 			PreUcenterMembers param = new PreUcenterMembers();
-			param.setUsername(username);
+			param.setUsername(new String(username.getBytes("iso-8859-1"), "UTF-8"));
 			PreUcenterMembers member = userService.findUserByParam(param);
 			if(member == null){
 				jsonResult.setCode(Constant.SUCCESS);
