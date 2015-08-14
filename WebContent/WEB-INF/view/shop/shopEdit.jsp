@@ -91,8 +91,16 @@ a{
 			<td><input type="text" class="input" name="mark" placeholder="标签之间以逗号隔开"/></td>
 			<td>排序号</td>
 			<td><input type="text" class="input" name="sort"/></td>
+			<td>详情地址</td>
+			<td>
+				<input type="text" class="input" name="infoUrl"/>
+			</td>
+		</tr>
+		<tr valign="top">
 			<td>详细介绍</td>
-			<td><textarea rows="10" cols="20" name="description"></textarea></td>
+			<td  colspan="5">
+				<textarea rows="10" cols="20" name="description"></textarea>
+			</td>
 		</tr>
 	</table>
 </form>

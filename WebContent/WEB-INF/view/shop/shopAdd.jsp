@@ -95,7 +95,7 @@ a{
 				<input type="text" class="input" name="infoUrl"/>
 			</td>
 		</tr>
-		<tr>
+		<tr valign="top">
 			<td>详细介绍</td>
 			<td  colspan="5">
 				<textarea rows="10" cols="20" name="description"></textarea>

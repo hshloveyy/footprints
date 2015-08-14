@@ -46,6 +46,7 @@ public class TShopInfo  implements java.io.Serializable {
      private Integer discount;
      private Integer good;
      private Integer isAds;
+     private String infoUrl;
      
      @Transient
      private Integer likeCount;
@@ -372,8 +373,13 @@ public class TShopInfo  implements java.io.Serializable {
 		this.shopName = shopName;
 	}
 
+	public String getInfoUrl() {
+		return infoUrl;
+	}
 
-
+	public void setInfoUrl(String infoUrl) {
+		this.infoUrl = infoUrl;
+	}
 
 	@Override
 	public String toString() {
@@ -451,5 +457,6 @@ public class TShopInfo  implements java.io.Serializable {
 		builder.append("\"\n}");
 		return builder.toString();
 	}
+	
 	
 }

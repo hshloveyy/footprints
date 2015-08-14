@@ -133,6 +133,9 @@
         <property name="sort" type="java.lang.Integer">
         	<column name="sort" length="10"></column>
         </property>
+        <property name="infoUrl" type="java.lang.String">
+        	<column name="infoUrl"></column>
+        </property>
 <!--         <many-to-one name="category" column="class" class="com.mvc.footprints.entity.TCategory"></many-to-one> -->
 <!--         <many-to-one name="subCategory" column="subclass" class="com.mvc.footprints.entity.TSubCategory"></many-to-one> -->
 <!--         <set name="images" table="t_shop_image"> -->
