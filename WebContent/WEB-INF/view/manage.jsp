@@ -73,6 +73,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		        	loadProtocolForm();
 		        }else if(index == 15){
 		        	loadNoticeDg();
+		        }else if(index == 16){
+		        	loadUrlForm();
 		        }
 		    },
 		    onBeforeClose: function(title,index){
@@ -90,6 +92,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		      }
 
 		}); 
+	}
+	
+	function loadUrlForm(){
+		$('#url_form').form('load','common/url');
 	}
 	
 	function loadAboutForm(){
@@ -116,6 +122,25 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    		showType:'slide'
 		    	});
 		    	loadAboutForm();
+		    }    
+		}); 
+	}
+	
+	function saveUrl(){
+		$('#url_form').form('submit',{    
+		    url:'common/saveurl',    
+		    onSubmit: function(){    
+		        // do some check    
+		        // return false to prevent submit;    
+		    },    
+		    success:function(data){
+		    	data = eval('(' + data + ')');
+		    	$.messager.show({
+		    		title:'我的消息',
+		    		msg:data.result?'修改成功':'修改失败',
+		    		timeout:5000,
+		    		showType:'slide'
+		    	});
 		    }    
 		}); 
 	}
@@ -221,6 +246,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    <div title="通知管理" data-options="closable:true" style="padding:20px;">   
 		       <table id="notice_dg"></table> 
 		    </div> 
+		     <div title="url" data-options="closable:true" style="padding:20px;">   
+		       <form id="url_form" action="" method="post">
+			       <input type="hidden" name="id"> 
+			       	<textarea style="width:100%;height:300px;" name="dictvalue"></textarea>
+		       </form>
+		       <a class="easyui-linkbutton" onclick="saveUrl()">保存</a>
+		    </div>  
 		</div>  
     </div>
 </div> 
