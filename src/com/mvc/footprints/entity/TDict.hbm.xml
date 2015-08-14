@@ -11,10 +11,10 @@
             <generator class="identity" />
         </id>
         <property name="key" type="java.lang.String">
-            <column name="key" />
+            <column name="dictkey" />
         </property>
         <property name="value" type="java.lang.String">
-            <column name="value" />
+            <column name="dictvalue" />
         </property>
         <property name="description" type="java.lang.String">
             <column name="description" />
