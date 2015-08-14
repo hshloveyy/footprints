@@ -5,7 +5,9 @@ import java.util.List;
 
 import net.sf.json.JSONObject;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
+import org.hsqldb.lib.StringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,12 +15,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mvc.footprints.constant.Constant;
 import com.mvc.footprints.entity.TAbout;
+import com.mvc.footprints.entity.TDict;
 import com.mvc.footprints.entity.TNotice;
 import com.mvc.footprints.entity.TProtocol;
-import com.mvc.footprints.entity.TReport;
 import com.mvc.footprints.resultmap.JsonResult;
 import com.mvc.footprints.resultmap.PagerResult;
-import com.mvc.footprints.resultmap.ResultJson;
 import com.mvc.footprints.service.ICommonService;
 
 @Controller
@@ -202,6 +203,27 @@ public class CommonController {
 			jsonResult.setResult(true);
 		} catch (Exception e) {
 			e.printStackTrace();
+			jsonResult.setResult(false);
+		}
+		return JSONObject.fromObject(jsonResult).toString();
+	}
+	
+	@ResponseBody
+	@RequestMapping(value="/dict")
+	public String dict(String key){
+		JsonResult jsonResult = new JsonResult();
+		try {
+			if(StringUtils.isBlank(key)){
+				key = "url";
+			}
+			TDict dict = commonService.findByKey(key);
+			jsonResult.setCode(Constant.SUCCESS);
+			jsonResult.setObj(dict);
+			jsonResult.setResult(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setMsg(e.getMessage());
 			jsonResult.setResult(false);
 		}
 		return JSONObject.fromObject(jsonResult).toString();

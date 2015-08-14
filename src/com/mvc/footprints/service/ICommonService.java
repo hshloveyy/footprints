@@ -3,6 +3,7 @@ package com.mvc.footprints.service;
 import java.util.List;
 
 import com.mvc.footprints.entity.TAbout;
+import com.mvc.footprints.entity.TDict;
 import com.mvc.footprints.entity.TNotice;
 import com.mvc.footprints.entity.TProtocol;
 
@@ -28,4 +29,5 @@ public interface ICommonService{
 
 	void updateNotice(TNotice report);
 
+	TDict findByKey(String key);
 }

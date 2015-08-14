@@ -7,9 +7,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mvc.footprints.dao.IAboutDao;
+import com.mvc.footprints.dao.IDictDao;
 import com.mvc.footprints.dao.INoticeDao;
 import com.mvc.footprints.dao.IProtocolDao;
 import com.mvc.footprints.entity.TAbout;
+import com.mvc.footprints.entity.TDict;
 import com.mvc.footprints.entity.TNotice;
 import com.mvc.footprints.entity.TProtocol;
 import com.mvc.footprints.service.ICommonService;
@@ -26,6 +28,8 @@ public class CommonServiceImpl implements ICommonService {
 	@Autowired
 	private INoticeDao noticeDao;
 	
+	@Autowired
+	private IDictDao dictDao;
 
 	@Override
 	public void saveAbout(Object object) {
@@ -71,5 +75,10 @@ public class CommonServiceImpl implements ICommonService {
 	@Override
 	public void updateNotice(TNotice report) {
 		noticeDao.update(report);
+	}
+	
+	@Override
+	public TDict findByKey(String key) {
+		return dictDao.findByKey(key);
 	}
 }
