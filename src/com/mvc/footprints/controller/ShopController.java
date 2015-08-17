@@ -181,6 +181,7 @@ public class ShopController {
 		TShopInfo shopInfo = (TShopInfo) shopService.findById(""+param.getShopId());
 		
 		if(shopInfo != null){
+			shopInfo.setLikeCount(shopInfo.getGood());
 			List<TShopWorktime> worktimes = shopWorktimeService.findWorktimeByShopId(shopInfo.getId());
 			shopInfo.setWorktimes(worktimes);
 			jsonResult.setCode(Constant.SUCCESS);
