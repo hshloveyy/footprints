@@ -25,7 +25,7 @@ public class FileDownloadUtil {
         	  //  path是指欲下载的文件的路径。 
             File file  =   new  File(path);
             //  取得文件名。 
-            String filename  =  file.getName();
+//            String filename  =  file.getName();
             //  取得文件的后缀名。 
 //            String ext  =  filename.substring(filename.lastIndexOf( " . " )  +   1 ).toUpperCase();
 
@@ -127,12 +127,12 @@ public class FileDownloadUtil {
             FileOutputStream fs  =   new  FileOutputStream( " c:/abc.gif " );
 
              byte [] buffer  =   new   byte [ 1204 ];
-             int  length;
              while  ((byteread  =  inStream.read(buffer))  !=   - 1 ) {
                 bytesum  +=  byteread;
                 System.out.println(bytesum);
                 fs.write(buffer,  0 , byteread);
             }
+            fs.close();
         }  catch  (FileNotFoundException e) {
             e.printStackTrace();
         }  catch  (IOException e) {
