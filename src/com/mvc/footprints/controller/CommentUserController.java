@@ -13,8 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mvc.footprints.constant.Constant;
-import com.mvc.footprints.entity.PreUcenterMembers;
-import com.mvc.footprints.entity.TComment;
 import com.mvc.footprints.entity.TCommentUser;
 import com.mvc.footprints.param.CityParam;
 import com.mvc.footprints.param.CommentUserParam;
@@ -140,6 +138,56 @@ public class CommentUserController {
 //			}
 			jsonResult.setObj(commentUsers);
 			jsonResult.setCode(Constant.SUCCESS);
+			jsonResult.setResult(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.setMsg(e.getMessage());
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setResult(false);
+		}
+		
+		return JSONObject.fromObject(jsonResult).toString();
+	}
+	
+	/**
+	 * 根据用户id获取评论列表条数
+	 * @param param
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("messagetome")
+	public String messageToMe(String userId){
+		JsonResult jsonResult = new JsonResult();
+		try {
+			int count = commentUserService.findUnreadMessageByUserId(userId);
+			
+			jsonResult.setObj(count);
+			jsonResult.setMsg("有" + count + "条未读消息");
+			jsonResult.setCode(Constant.SUCCESS);
+			jsonResult.setResult(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.setMsg(e.getMessage());
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setResult(false);
+		}
+		
+		return JSONObject.fromObject(jsonResult).toString();
+	}
+	
+	/**
+	 * 修改未读状态为已读
+	 * @param param
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("updatereadflag")
+	public String updateCommentUserFlag(String commentUserId){
+		JsonResult jsonResult = new JsonResult();
+		try {
+			commentUserService.updateMessageByCommentUserId(commentUserId);
+			jsonResult.setCode(Constant.SUCCESS);
+			jsonResult.setMsg("状态修改为已读");
 			jsonResult.setResult(true);
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -26,17 +26,17 @@ public class CommentUserService implements ICommentUserService {
 	
 	@Override
 	public Object findById(String id) {
-		return commentUserDao.findById(TComment.class, id);
+		return commentUserDao.findById(TCommentUser.class, id);
 	}
 
 	@Override
 	public List<?> findAll(Class<?> clazz, PagerParam param) {
-		return commentUserDao.findAll(TComment.class, param);
+		return commentUserDao.findAll(TCommentUser.class, param);
 	}
 
 	@Override
 	public int findAllCount(Class<?> clazz, PagerParam param) {
-		return commentUserDao.findAllCount(TComment.class, param);
+		return commentUserDao.findAllCount(TCommentUser.class, param);
 	}
 
 	@Override
@@ -74,5 +74,17 @@ public class CommentUserService implements ICommentUserService {
 	@Override
 	public List<TCommentUser> findAll(Class<?> clazz) {
 		return (List<TCommentUser>) commentUserDao.findAll(clazz);
+	}
+	
+	@Override
+	public int findUnreadMessageByUserId(String userId) {
+		return commentUserDao.findUnreadMessageByUserId(userId);
+	}
+	
+	@Override
+	public void updateMessageByCommentUserId(String commentUserId) {
+		TCommentUser tCommentUser = (TCommentUser) findById(commentUserId);
+		tCommentUser.setReadFlag(1);
+		commentUserDao.update(tCommentUser);
 	}
 }

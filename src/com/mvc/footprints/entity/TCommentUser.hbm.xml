@@ -25,5 +25,8 @@
         <property name="millisecond" type="java.lang.String">
             <column name="millisecond" length="25" />
         </property>
+        <property name="readFlag" type="java.lang.Integer">
+            <column name="read_flag" />
+        </property>
     </class>
 </hibernate-mapping>

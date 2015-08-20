@@ -23,7 +23,7 @@ public class TCommentUser  implements java.io.Serializable {
      private String fromUserName;
      private String createTime;
      private String millisecond;
-     
+     private Integer readFlag;
      private String userImageId;
 
     // Constructors
@@ -106,6 +106,39 @@ public class TCommentUser  implements java.io.Serializable {
 
 	public void setFromUserName(String fromUserName) {
 		this.fromUserName = fromUserName;
+	}
+
+	public Integer getReadFlag() {
+		return readFlag;
+	}
+
+	public void setReadFlag(Integer readFlag) {
+		this.readFlag = readFlag;
+	}
+
+	@Override
+	public String toString() {
+		StringBuilder builder = new StringBuilder();
+		builder.append("TCommentUser : {\n\t\"id\" : \"");
+		builder.append(id);
+		builder.append("\", \n\t\"commentId\" : \"");
+		builder.append(commentId);
+		builder.append("\", \n\t\"content\" : \"");
+		builder.append(content);
+		builder.append("\", \n\t\"fromUser\" : \"");
+		builder.append(fromUser);
+		builder.append("\", \n\t\"fromUserName\" : \"");
+		builder.append(fromUserName);
+		builder.append("\", \n\t\"createTime\" : \"");
+		builder.append(createTime);
+		builder.append("\", \n\t\"millisecond\" : \"");
+		builder.append(millisecond);
+		builder.append("\", \n\t\"readFlag\" : \"");
+		builder.append(readFlag);
+		builder.append("\", \n\t\"userImageId\" : \"");
+		builder.append(userImageId);
+		builder.append("\"\n}");
+		return builder.toString();
 	}
 
 }

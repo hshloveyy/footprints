@@ -11,4 +11,8 @@ public interface ICommentUserService extends BaseService{
 
 	List<TCommentUser> findCommentUserByParam(CommentUserParam param);
 
+	int findUnreadMessageByUserId(String userId);
+
+	void updateMessageByCommentUserId(String commentUserId);
+
 }
