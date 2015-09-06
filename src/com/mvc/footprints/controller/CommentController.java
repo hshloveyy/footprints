@@ -358,4 +358,44 @@ public class CommentController {
 		
 		return JSONObject.fromObject(jsonResult).toString();
 	}
+	
+	/**
+	 * 获取足迹详情
+	 * @param param
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("detail")
+	public String getCommentDetail(String commentId){
+		JsonResult jsonResult = new JsonResult();
+		try {
+			TComment tComment = (TComment) commentService.findById(commentId);
+			
+			if (tComment != null) {
+				TShopInfo shopInfo = (TShopInfo) shopService.findById(tComment.getShopId() + "");
+				
+				if(shopInfo != null){
+					tComment.setShopName(shopInfo.getName());
+				}
+				
+				PreUcenterMembers member = userService.findUserById(tComment.getUserId());
+				if(member != null){
+					tComment.setUserImageId(member.getPhotoImgId());
+				}
+				
+				Long count = commentService.findLikeCountByCommentId(new CommentParam(tComment.getId()));
+				tComment.setLikeCount(count.intValue());
+			}
+			jsonResult.setObj(tComment);
+			jsonResult.setCode(Constant.SUCCESS);
+			jsonResult.setResult(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.setMsg(e.getMessage());
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setResult(false);
+		}
+		
+		return JSONObject.fromObject(jsonResult).toString();
+	}
 }
