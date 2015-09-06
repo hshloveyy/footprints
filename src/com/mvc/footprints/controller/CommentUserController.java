@@ -159,7 +159,7 @@ public class CommentUserController {
 	public String messageToMe(String userId){
 		JsonResult jsonResult = new JsonResult();
 		try {
-			int count = commentUserService.findUnreadMessageByUserId(userId);
+			int count = commentUserService.findUnreadMessageCountByUserId(userId);
 			
 			jsonResult.setObj(count);
 			jsonResult.setMsg("有" + count + "条未读消息");
@@ -188,6 +188,31 @@ public class CommentUserController {
 			commentUserService.updateMessageByCommentUserId(commentUserId);
 			jsonResult.setCode(Constant.SUCCESS);
 			jsonResult.setMsg("状态修改为已读");
+			jsonResult.setResult(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.setMsg(e.getMessage());
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setResult(false);
+		}
+		
+		return JSONObject.fromObject(jsonResult).toString();
+	}
+	
+	/**
+	 * 未读列表
+	 * @param param
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("unreadmessage")
+	public String unreadmessage(String userId) {
+		JsonResult jsonResult = new JsonResult();
+		try {
+			List<TCommentUser> commentUsers = commentUserService.findUnreadMessageByUserId(userId);
+			
+			jsonResult.setObj(commentUsers);
+			jsonResult.setCode(Constant.SUCCESS);
 			jsonResult.setResult(true);
 		} catch (Exception e) {
 			e.printStackTrace();

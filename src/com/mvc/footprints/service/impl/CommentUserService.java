@@ -77,8 +77,8 @@ public class CommentUserService implements ICommentUserService {
 	}
 	
 	@Override
-	public int findUnreadMessageByUserId(String userId) {
-		return commentUserDao.findUnreadMessageByUserId(userId);
+	public int findUnreadMessageCountByUserId(String userId) {
+		return commentUserDao.findUnreadMessageCountByUserId(userId);
 	}
 	
 	@Override
@@ -86,5 +86,10 @@ public class CommentUserService implements ICommentUserService {
 		TCommentUser tCommentUser = (TCommentUser) findById(commentUserId);
 		tCommentUser.setReadFlag(1);
 		commentUserDao.update(tCommentUser);
+	}
+	
+	@Override
+	public List<TCommentUser> findUnreadMessageByUserId(String userId) {
+		return commentUserDao.findUnreadMessageByUserId(userId);
 	}
 }

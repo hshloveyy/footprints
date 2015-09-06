@@ -29,7 +29,7 @@ public class CommentUserDaoImpl extends BaseDaoImpl implements ICommentUserDao {
 	}
 	
 	@Override
-	public int findUnreadMessageByUserId(final String userId) {
+	public int findUnreadMessageCountByUserId(final String userId) {
 		return getHibernateTemplate().execute(new HibernateCallback<Integer>() {
 			@Override
 			public Integer doInHibernate(Session arg0)
@@ -39,6 +39,20 @@ public class CommentUserDaoImpl extends BaseDaoImpl implements ICommentUserDao {
 								"SELECT count(id) FROM t_comment_user t where t.comment_id in "
 								+ "(select id from t_comment a where a.user_id = ?) and t.read_flag = 0")
 						.setString(0, userId).uniqueResult()).intValue();
+			}
+		});
+	}
+	
+	@Override
+	public List<TCommentUser> findUnreadMessageByUserId(final String userId) {
+		return getHibernateTemplate().execute(new HibernateCallback<List<TCommentUser>>() {
+			@Override
+			public List<TCommentUser> doInHibernate(Session arg0)
+					throws HibernateException, SQLException {
+				return (List<TCommentUser>) arg0
+						.createSQLQuery("SELECT * FROM t_comment_user t where t.comment_id in "
+								+ "(select id from t_comment a where a.user_id = ?) and t.read_flag = 0")
+						.setString(0, userId).list();
 			}
 		});
 	}

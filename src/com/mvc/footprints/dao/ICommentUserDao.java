@@ -11,6 +11,7 @@ public interface ICommentUserDao extends BaseDao{
 
 	int findCommentLikeCountByCommentId(Integer id);
 
-	int findUnreadMessageByUserId(String userId);
-
+	int findUnreadMessageCountByUserId(String userId);
+	
+	List<TCommentUser> findUnreadMessageByUserId(String userId);
 }
