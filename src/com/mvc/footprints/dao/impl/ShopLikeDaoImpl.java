@@ -51,7 +51,7 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 													+ ",sum(like_count) like_count "
 													+ "from t_shop_like,t_shop_info where t_shop_like.shop_id = t_shop_info.id "
 													+ "and year(t_shop_like.last_time) = year(now()) "
-													+ "and shop_id in (select id from t_SHOP_info where 1=1 "
+													+ "and shop_id in (select id from t_shop_info where 1=1 "
 													+ getCityParam(param)
 													+ getSubClassParam(param)
 													+ ") "
@@ -65,7 +65,7 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 									+ ",sum(like_count) like_count "
 									+ "from t_shop_like,t_shop_info where t_shop_like.shop_id = t_shop_info.id "
 									+ "and month(t_shop_like.last_time) = month(now()) "
-									+ "and shop_id in (select id from t_SHOP_info where 1=1 "
+									+ "and shop_id in (select id from t_shop_info where 1=1 "
 									+ getCityParam(param)
 									+ getSubClassParam(param)
 									+ ") "
