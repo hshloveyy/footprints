@@ -1,6 +1,7 @@
 package com.mvc.footprints.dao.impl;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.hibernate.HibernateException;
@@ -35,11 +36,12 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 
 	@Override
 	public List<TShopLike> ranking(final ShopParam param) {
-		List<TShopLike> l = getHibernateTemplate().execute(
-				new HibernateCallback<List<TShopLike>>() {
+		List<TShopLike> list = new ArrayList<TShopLike>();
+		List<Object[]> l = getHibernateTemplate().execute(
+				new HibernateCallback<List<Object[]>>() {
 					@SuppressWarnings("unchecked")
 					@Override
-					public List<TShopLike> doInHibernate(Session arg0)
+					public List<Object[]> doInHibernate(Session arg0)
 							throws HibernateException, SQLException {
 						if (Constant.RANKING_TYPE_YEAR.equals(param.getType())) {
 							return arg0
@@ -78,7 +80,15 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 						}
 					}
 				});
-		return l;
+		
+		for (Object[] objects : l) {
+			TShopLike shopLike = new TShopLike((Integer) objects[1],
+					(Integer) objects[3], (Integer) objects[7],
+					objects[4].toString(), objects[5].toString(),
+					objects[6].toString());
+			list.add(shopLike);
+		}
+		return list;
 	}
 
 	private String getCityParam(ShopParam param) {
