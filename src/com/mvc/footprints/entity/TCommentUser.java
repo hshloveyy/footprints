@@ -23,7 +23,7 @@ public class TCommentUser  implements java.io.Serializable {
      private String fromUserName;
      private String createTime;
      private String millisecond;
-     private Integer readFlag;
+     private Integer readFlag = 0;
      private String userImageId;
 
     // Constructors
