@@ -1,6 +1,7 @@
 package com.mvc.footprints.service.impl;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -140,7 +141,7 @@ public class ShopServiceImpl implements IShopService {
 	}
 
 	@Override
-	public List<TShopLike> ranking(ShopParam param) {
+	public List<Map<String,Object>> ranking(ShopParam param) {
 		return shopLikeDao.ranking(param);
 	}
 	

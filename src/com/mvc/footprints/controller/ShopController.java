@@ -437,8 +437,17 @@ public class ShopController {
 	@RequestMapping("ranking")
 	public String ranking(ShopParam param){
 		JsonResult jsonResult = new JsonResult();
+		List<TShopInfo> shops = new ArrayList<TShopInfo>();
 		try {
-			List<TShopLike> shops = shopService.ranking(param);
+			List<Map<String, Object>> maps = shopService.ranking(param);
+			for (Map<String, Object> map : maps) {
+				String shopId = map.get("shopId").toString();
+				String likeCount = map.get("likeCount").toString();
+				TShopInfo shopInfo = (TShopInfo) shopService.findById(shopId);
+				shopInfo.setLikeCount(Integer.valueOf(likeCount));
+				
+				shops.add(shopInfo);
+			}
 			
 			jsonResult.setObj(shops);
 			jsonResult.setCode(Constant.SUCCESS);

@@ -2,7 +2,9 @@ package com.mvc.footprints.dao.impl;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
@@ -13,6 +15,7 @@ import com.mvc.footprints.constant.Constant;
 import com.mvc.footprints.dao.BaseDaoImpl;
 import com.mvc.footprints.dao.IShopLikeDao;
 import com.mvc.footprints.entity.TShopLike;
+import com.mvc.footprints.entity.TSubCategory;
 import com.mvc.footprints.param.ShopParam;
 
 @Repository("shopLikeDao")
@@ -35,14 +38,26 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 	}
 
 	@Override
-	public List<TShopLike> ranking(final ShopParam param) {
-		List<TShopLike> list = new ArrayList<TShopLike>();
+	public List<Map<String, Object>> ranking(final ShopParam param) {
+		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		List<Object[]> l = getHibernateTemplate().execute(
 				new HibernateCallback<List<Object[]>>() {
 					@SuppressWarnings("unchecked")
 					@Override
 					public List<Object[]> doInHibernate(Session arg0)
 							throws HibernateException, SQLException {
+						boolean flag = true;
+						
+						//是否选择全部
+						TSubCategory subCategory = (TSubCategory)arg0.createQuery("from TSubCategory where id = " + param.getSubClass()).uniqueResult();
+						if(subCategory != null){
+							if(0 == subCategory.getStatus()){
+								flag = false;
+							}
+						}else{
+							flag = false;
+						}
+						
 						if (Constant.RANKING_TYPE_YEAR.equals(param.getType())) {
 							return arg0
 									.createSQLQuery(
@@ -53,7 +68,7 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 													+ "and year(t_shop_like.last_time) = year(now()) "
 													+ "and shop_id in (select id from t_shop_info where 1=1 "
 													+ getCityParam(param)
-													+ getSubClassParam(param)
+													+ getSubClassParam(param, flag)
 													+ ") "
 													+ "group by shop_id "
 													+ "order by like_count desc")
@@ -67,7 +82,7 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 									+ "and month(t_shop_like.last_time) = month(now()) "
 									+ "and shop_id in (select id from t_shop_info where 1=1 "
 									+ getCityParam(param)
-									+ getSubClassParam(param)
+									+ getSubClassParam(param, flag)
 									+ ") "
 									+ "group by shop_id "
 									+ "order by like_count desc";
@@ -82,11 +97,10 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 				});
 		
 		for (Object[] objects : l) {
-			TShopLike shopLike = new TShopLike((Integer) objects[1],
-					(Integer) objects[3], (Integer) objects[7],
-					objects[4].toString(), objects[5].toString(),
-					objects[6].toString());
-			list.add(shopLike);
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("shopId", objects[0]);
+			map.put("likeCount", objects[1]);
+			list.add(map);
 		}
 		return list;
 	}
@@ -99,19 +113,24 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 		}
 	}
 
-	private String getSubClassParam(ShopParam param) {
-		if (param.getSubClass() != null) {
-			return " and subClass = " + param.getSubClass();
-		} else {
+	private String getSubClassParam(ShopParam param, boolean flag) {
+		if(flag){
+			if (param.getSubClass() != null) {
+				return " and subClass = " + param.getSubClass();
+			} else {
+				return "";
+			}
+		}else{
 			return "";
 		}
 	}
 
 	private String getColumn() {
-		return "t_shop_like.id,t_shop_like.shop_id," +
-				"t_shop_like.shop_name,t_shop_like.user_id," +
-				"t_shop_like.create_time,t_shop_like.last_time," +
-				"t_shop_like.millsecond,t_shop_like.is_click";
+//		return "t_shop_like.id,t_shop_like.shop_id," +
+//				"t_shop_like.shop_name,t_shop_like.user_id," +
+//				"t_shop_like.create_time,t_shop_like.last_time," +
+//				"t_shop_like.millsecond,t_shop_like.is_click";
+		return "min(t_shop_info.id) shop_id";
 	}
 	
 	@Override

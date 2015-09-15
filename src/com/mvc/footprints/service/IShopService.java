@@ -1,6 +1,7 @@
 package com.mvc.footprints.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.mvc.footprints.entity.TShopInfo;
 import com.mvc.footprints.entity.TShopLike;
@@ -13,7 +14,7 @@ public interface IShopService extends BaseService{
 
 	TShopLike findLikeByParam(ShopParam param);
 
-	List<TShopLike> ranking(ShopParam param);
+	List<Map<String, Object>> ranking(ShopParam param);
 
 	List<TShopInfo> isbbsShop(ShopParam param);
 
