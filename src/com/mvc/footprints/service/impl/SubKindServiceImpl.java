@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mvc.footprints.dao.ISubKindDao;
-import com.mvc.footprints.entity.TCity;
+import com.mvc.footprints.entity.TSubKind;
 import com.mvc.footprints.entity.TSubKind;
 import com.mvc.footprints.param.PagerParam;
 import com.mvc.footprints.service.ISubKindService;
@@ -30,7 +30,7 @@ public class SubKindServiceImpl implements ISubKindService {
 
 	@Override
 	public void delete(String id) {
-		subKindDao.delete(subKindDao.findById(TCity.class, id));
+		subKindDao.delete(subKindDao.findById(TSubKind.class, id));
 	}
 
 	@Override
@@ -40,7 +40,7 @@ public class SubKindServiceImpl implements ISubKindService {
 
 	@Override
 	public Object findById(String id) {
-		return subKindDao.findById(TCity.class, id);
+		return subKindDao.findById(TSubKind.class, id);
 	}
 	
 	@Override

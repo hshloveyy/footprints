@@ -85,6 +85,7 @@
 								        // return false to prevent submit;    
 								    },    
 								    success:function(data){
+								    	data = eval('(' + data + ')');
 								    	$('#dd_addSubKind').dialog('close');
 								    	$.messager.show({
 								    		title:'我的消息',
