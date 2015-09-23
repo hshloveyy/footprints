@@ -38,6 +38,79 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 	}
 
 	@Override
+//	public List<Map<String, Object>> ranking(final ShopParam param) {
+//		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
+//		Map<String, List<Object[]>> l = getHibernateTemplate().execute(
+//				new HibernateCallback<Map<String, List<Object[]>>>() {
+//					@SuppressWarnings("unchecked")
+//					@Override
+//					public Map<String, List<Object[]>> doInHibernate(Session arg0)
+//							throws HibernateException, SQLException {
+//						boolean flag = true;
+//						
+//						//是否选择全部
+//						TSubCategory subCategory = (TSubCategory)arg0.createQuery("from TSubCategory where id = " + param.getSubClass()).uniqueResult();
+//						if(subCategory != null){
+//							if(0 == subCategory.getStatus()){
+//								flag = false;
+//							}
+//						}else{
+//							flag = false;
+//						}
+//						
+//						List<Object[]> allList = arg0
+//									.createSQLQuery(
+//											"select "
+//													+ getColumn()
+//													+ ",sum(like_count) like_count "
+//													+ "from t_shop_like,t_shop_info where t_shop_like.shop_id = t_shop_info.id "
+//													+ "and year(t_shop_like.last_time) = year(now()) "
+//													+ "and shop_id in (select id from t_shop_info where 1=1 "
+//													+ getCityParam(param)
+//													+ getSubClassParam(param, flag)
+//													+ ") "
+//													+ "group by shop_id "
+//													+ "order by like_count desc")
+//									.setMaxResults(Constant.RANKING_ROWS)
+//									.list();
+//					
+//						String sql = "select "
+//									+ getColumn()
+//									+ ",sum(like_count) like_count "
+//									+ "from t_shop_like,t_shop_info where t_shop_like.shop_id = t_shop_info.id "
+//									+ "and month(t_shop_like.last_time) = month(now()) "
+//									+ "and shop_id in (select id from t_shop_info where 1=1 "
+//									+ getCityParam(param)
+//									+ getSubClassParam(param, flag)
+//									+ ") "
+//									+ "group by shop_id "
+//									+ "order by like_count desc";
+//						List<Object[]> monthList = arg0
+//									.createSQLQuery(sql)
+//									.setMaxResults(Constant.RANKING_ROWS)
+//									.list();
+//						
+//						Map<String, List<Object[]>> listMap = new HashMap<String, List<Object[]>>();
+//						listMap.put("all", allList);
+//						listMap.put("month", monthList);
+//						
+//						return listMap;
+//					}
+//			});
+//		
+//		
+//		List<Object[]> all = l.get("all");
+//		List<Object[]> month = l.get("month");
+//		
+//		for (Object[] objects : l) {
+//			Map<String, Object> map = new HashMap<String, Object>();
+//			map.put("shopId", objects[0]);
+//			map.put("likeCount", objects[1]);
+//			list.add(map);
+//		}
+//		return list;
+//	}
+//	
 	public List<Map<String, Object>> ranking(final ShopParam param) {
 		List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
 		List<Object[]> l = getHibernateTemplate().execute(
@@ -65,7 +138,7 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 													+ getColumn()
 													+ ",sum(like_count) like_count "
 													+ "from t_shop_like,t_shop_info where t_shop_like.shop_id = t_shop_info.id "
-													+ "and year(t_shop_like.last_time) = year(now()) "
+//													+ "and year(t_shop_like.last_time) = year(now()) "
 													+ "and shop_id in (select id from t_shop_info where 1=1 "
 													+ getCityParam(param)
 													+ getSubClassParam(param, flag)
@@ -86,10 +159,8 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 									+ ") "
 									+ "group by shop_id "
 									+ "order by like_count desc";
-							System.out.println(sql);
 							return arg0
 									.createSQLQuery(sql)
-									.addEntity(TShopLike.class)
 									.setMaxResults(Constant.RANKING_ROWS)
 									.list();
 						}
