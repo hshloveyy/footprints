@@ -437,8 +437,10 @@ public class ShopController {
 	@RequestMapping("ranking")
 	public String ranking(ShopParam param){
 		JsonResult jsonResult = new JsonResult();
-		List<TShopInfo> shops = new ArrayList<TShopInfo>();
+		Map<String, Object> resultMap = new HashMap<String, Object>();
 		try {
+			List<TShopInfo> allShops = new ArrayList<TShopInfo>();
+			param.setType(Constant.RANKING_TYPE_YEAR);
 			List<Map<String, Object>> maps = shopService.ranking(param);
 			for (Map<String, Object> map : maps) {
 				String shopId = map.get("shopId").toString();
@@ -446,10 +448,25 @@ public class ShopController {
 				TShopInfo shopInfo = (TShopInfo) shopService.findById(shopId);
 				shopInfo.setLikeCount(Integer.valueOf(likeCount));
 				
-				shops.add(shopInfo);
+				allShops.add(shopInfo);
 			}
+			resultMap.put("all", allShops);
 			
-			jsonResult.setObj(shops);
+
+			List<TShopInfo> monthShops = new ArrayList<TShopInfo>();
+			param.setType(Constant.RANKING_TYPE_MONTH);
+			List<Map<String, Object>> mapsMonth = shopService.ranking(param);
+			for (Map<String, Object> map : mapsMonth) {
+				String shopId = map.get("shopId").toString();
+				String likeCount = map.get("likeCount").toString();
+				TShopInfo shopInfo = (TShopInfo) shopService.findById(shopId);
+				shopInfo.setLikeCount(Integer.valueOf(likeCount));
+				
+				monthShops.add(shopInfo);
+			}
+			resultMap.put("month", monthShops);
+			
+			jsonResult.setObj(resultMap);
 			jsonResult.setCode(Constant.SUCCESS);
 			jsonResult.setResult(true);
 		} catch (Exception e) {
