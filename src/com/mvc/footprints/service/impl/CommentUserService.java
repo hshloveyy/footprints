@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.mvc.footprints.dao.ICommentUserDao;
 import com.mvc.footprints.dao.IPreUcenterMemberDao;
 import com.mvc.footprints.entity.PreUcenterMembers;
-import com.mvc.footprints.entity.TComment;
 import com.mvc.footprints.entity.TCommentUser;
 import com.mvc.footprints.param.CommentUserParam;
 import com.mvc.footprints.param.PagerParam;
@@ -91,5 +90,10 @@ public class CommentUserService implements ICommentUserService {
 	@Override
 	public List<TCommentUser> findUnreadMessageByUserId(String userId) {
 		return commentUserDao.findUnreadMessageByUserId(userId);
+	}
+	
+	@Override
+	public void removeMessage(String commentUserId) {
+		commentUserDao.removeMessage(commentUserId);
 	}
 }

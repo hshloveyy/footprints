@@ -223,4 +223,29 @@ public class CommentUserController {
 		
 		return JSONObject.fromObject(jsonResult).toString();
 	}
+	
+	/**
+	 * 消息标识为删除
+	 * @param param
+	 * @return
+	 */
+	@ResponseBody
+	@RequestMapping("removemessage")
+	public String removeMessage(String commentUserId) {
+		JsonResult jsonResult = new JsonResult();
+		try {
+			commentUserService.removeMessage(commentUserId);
+			
+			jsonResult.setCode(Constant.SUCCESS);
+			jsonResult.setMsg("删除成功");
+			jsonResult.setResult(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.setMsg(e.getMessage());
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setResult(false);
+		}
+		
+		return JSONObject.fromObject(jsonResult).toString();
+	}
 }

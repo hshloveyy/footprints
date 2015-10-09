@@ -14,4 +14,6 @@ public interface ICommentUserDao extends BaseDao{
 	int findUnreadMessageCountByUserId(String userId);
 	
 	List<TCommentUser> findUnreadMessageByUserId(String userId);
+
+	void removeMessage(String commentUserId);
 }

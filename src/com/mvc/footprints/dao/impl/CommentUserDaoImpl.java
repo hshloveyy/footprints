@@ -71,4 +71,11 @@ public class CommentUserDaoImpl extends BaseDaoImpl implements ICommentUserDao {
 			}
 		});
 	}
+	
+	@Override
+	public void removeMessage(String commentUserId) {
+		TCommentUser commentUser = getHibernateTemplate().load(TCommentUser.class, Integer.valueOf(commentUserId));
+		commentUser.setReadFlag(2);
+		getHibernateTemplate().saveOrUpdate(commentUser);
+	}
 }
