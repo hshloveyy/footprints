@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mvc.footprints.constant.Constant;
+import com.mvc.footprints.entity.PreUcenterMembers;
 import com.mvc.footprints.entity.TCommentUser;
 import com.mvc.footprints.param.CityParam;
 import com.mvc.footprints.param.CommentUserParam;
@@ -129,13 +130,13 @@ public class CommentUserController {
 		try {
 			List<TCommentUser> commentUsers = commentUserService.findCommentUserByParam(param);
 			
-//			for (TCommentUser tCommentUser : commentUsers) {
-//				PreUcenterMembers member = userService.findUserById(Integer.valueOf(tCommentUser.getFromUser()));
-//				if(member != null){
-//					String imageId = member.getPhotoImgId();
-//					tCommentUser.setUserImageId(imageId);
-//				}
-//			}
+			for (TCommentUser tCommentUser : commentUsers) {
+				PreUcenterMembers member = userService.findUserById(Integer.valueOf(tCommentUser.getFromUser()));
+				if(member != null){
+					String imageId = member.getPhotoImgId();
+					tCommentUser.setUserImageId(imageId);
+				}
+			}
 			jsonResult.setObj(commentUsers);
 			jsonResult.setCode(Constant.SUCCESS);
 			jsonResult.setResult(true);
