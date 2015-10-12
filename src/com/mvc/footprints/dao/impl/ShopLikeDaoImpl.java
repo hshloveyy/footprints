@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.lang.StringUtils;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.springframework.orm.hibernate3.HibernateCallback;
@@ -126,6 +127,7 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 						if(subCategory != null){
 							if(0 == subCategory.getStatus()){
 								flag = false;
+								param.setCategory(subCategory.getCategoryId() + "");
 							}
 						}else{
 							flag = false;
@@ -192,6 +194,9 @@ public class ShopLikeDaoImpl extends BaseDaoImpl implements IShopLikeDao {
 				return "";
 			}
 		}else{
+			if(StringUtils.isNotBlank(param.getCategory())){
+				return " and class = " + param.getCategory();
+			}
 			return "";
 		}
 	}
