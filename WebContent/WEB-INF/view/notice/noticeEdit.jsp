@@ -23,7 +23,7 @@ a{
 </head>
 <body>
 <form id="ff_NoticeEdit" action="" method="post">
-
+	<input type="hidden" name="id" /> 
 	<table>
 		<tr>
 			<td> 主题</td>
