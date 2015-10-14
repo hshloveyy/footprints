@@ -216,6 +216,7 @@ public class CommentUserController {
 				if(member != null){
 					String imageId = member.getPhotoImgId();
 					tCommentUser.setUserImageId(imageId);
+					tCommentUser.setFromUser(member.getUsername());
 				}
 			}
 			
