@@ -177,4 +177,9 @@ public class CommentService implements ICommentService {
 	public long findLikeCountByCommentId(CommentParam param) {
 		return commentLikeDao.findLikeCountByCommentId(param.getCommentId());
 	}
+	
+	@Override
+	public List<TCommentImage> findImageByCommentId(Integer commentId) {
+		return commentImageDao.findImageByCommentId(commentId);
+	}
 }

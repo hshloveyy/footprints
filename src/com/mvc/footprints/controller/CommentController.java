@@ -19,7 +19,6 @@ import com.mvc.footprints.entity.TCommentImage;
 import com.mvc.footprints.entity.TCommentLike;
 import com.mvc.footprints.entity.TShopInfo;
 import com.mvc.footprints.entity.TSign;
-import com.mvc.footprints.param.CityParam;
 import com.mvc.footprints.param.CommentParam;
 import com.mvc.footprints.resultmap.JsonResult;
 import com.mvc.footprints.resultmap.PagerResult;
@@ -385,6 +384,9 @@ public class CommentController {
 				
 				Long count = commentService.findLikeCountByCommentId(new CommentParam(tComment.getId()));
 				tComment.setLikeCount(count.intValue());
+				
+				List<TCommentImage> images = commentService.findImageByCommentId(tComment.getId());
+				tComment.setImages(images);
 			}
 			jsonResult.setObj(tComment);
 			jsonResult.setCode(Constant.SUCCESS);

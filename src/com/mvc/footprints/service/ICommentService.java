@@ -28,4 +28,6 @@ public interface ICommentService extends BaseService{
 	TCommentLike findLikeByParam(CommentParam param);
 
 	long findLikeCountByCommentId(CommentParam param);
+
+	List<TCommentImage> findImageByCommentId(Integer integer);
 }
