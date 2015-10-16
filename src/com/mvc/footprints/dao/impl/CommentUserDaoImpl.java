@@ -38,7 +38,7 @@ public class CommentUserDaoImpl extends BaseDaoImpl implements ICommentUserDao {
 				return ((BigInteger) arg0
 						.createSQLQuery(
 								"SELECT count(id) FROM t_comment_user t where t.comment_id in "
-								+ "(select id from t_comment a where a.user_id = ?) and t.read_flag = 0")
+								+ "(select id from t_comment a where a.user_id = ?) and t.read_flag <> 2")
 						.setString(0, userId).uniqueResult()).intValue();
 			}
 		});
@@ -52,7 +52,7 @@ public class CommentUserDaoImpl extends BaseDaoImpl implements ICommentUserDao {
 					throws HibernateException, SQLException {
 				List<Object[]> list = arg0
 						.createSQLQuery("SELECT * FROM t_comment_user t where t.comment_id in "
-								+ "(select id from t_comment a where a.user_id = ?) and t.read_flag = 0")
+								+ "(select id from t_comment a where a.user_id = ?) and t.read_flag <> 2")
 						.setString(0, userId).list();
 				List<TCommentUser> resultList = new ArrayList<TCommentUser>();
 				for (Object[] objArr : list) {
