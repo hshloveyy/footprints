@@ -2,6 +2,7 @@ package com.mvc.footprints.service.impl;
 
 import java.util.List;
 
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -94,6 +95,13 @@ public class CommentUserService implements ICommentUserService {
 	
 	@Override
 	public void removeMessage(String commentUserId) {
-		commentUserDao.removeMessage(commentUserId);
+		if(StringUtils.isNotBlank(commentUserId)){
+			String[] ids = commentUserId.split(",");
+			for (String id : ids) {
+				if(StringUtils.isNotBlank(id)){
+					commentUserDao.removeMessage(id);
+				}
+			}
+		}
 	}
 }

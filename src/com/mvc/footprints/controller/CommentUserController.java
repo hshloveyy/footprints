@@ -14,11 +14,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mvc.footprints.constant.Constant;
 import com.mvc.footprints.entity.PreUcenterMembers;
+import com.mvc.footprints.entity.TComment;
 import com.mvc.footprints.entity.TCommentUser;
 import com.mvc.footprints.param.CityParam;
 import com.mvc.footprints.param.CommentUserParam;
 import com.mvc.footprints.resultmap.JsonResult;
 import com.mvc.footprints.resultmap.PagerResult;
+import com.mvc.footprints.service.ICommentService;
 import com.mvc.footprints.service.ICommentUserService;
 import com.mvc.footprints.service.IUserService;
 
@@ -28,6 +30,9 @@ public class CommentUserController {
 	
 	@Autowired
 	private ICommentUserService commentUserService;
+	
+	@Autowired
+	private ICommentService commentService;
 	
 	@Autowired
 	private IUserService userService;
@@ -67,6 +72,14 @@ public class CommentUserController {
 			}
 			commentUser.setCreateTime(DateFormatUtils.format(now, Constant.DATETIME));
 			commentUser.setMillisecond(now.getTime()+"");
+			
+			//判断是否为当前用户回复当前用户自己的足迹
+			TComment tComment = (TComment) commentService.findById(commentUser.getCommentId() + "");
+			if(tComment != null && tComment.getUserId().equals(commentUser.getFromUser())){
+				//标记为删除
+				commentUser.setReadFlag(2);
+			}
+			
 			commentUserService.save(commentUser);
 			jsonResult.setCode(Constant.SUCCESS);
 			jsonResult.setResult(true);
