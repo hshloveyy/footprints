@@ -8,6 +8,7 @@ package com.mvc.footprints.service.impl;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.mvc.footprints.dao.IPhoneCodeDao;
 import com.mvc.footprints.entity.TPhoneCode;
@@ -20,7 +21,7 @@ import com.mvc.footprints.service.IPhoneCodeService;
  * 修改内容：新增 
  * 类说明：
  */
-
+@Service("phoneCodeService")
 public class PhoneCodeServiceImpl implements IPhoneCodeService {
 
 	@Autowired
