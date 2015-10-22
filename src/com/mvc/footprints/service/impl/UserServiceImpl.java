@@ -165,4 +165,11 @@ public class UserServiceImpl implements IUserService {
 	public PreUcenterMembers findUserByMobilePhone(String phoneNumber) {
 		return preUcenterMemberDao.findUserByMobilePhone(phoneNumber);
 	}
+
+	@Override
+	public PreUcenterMembers findUserByMobilePhoneAndUsername(
+			String phoneNumber, String userName) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

@@ -50,6 +50,14 @@ public class Constant {
 	 * 手机号码已被注册
 	 */
 	public static final int MOBILE_PHONE_IS_EXISTS = 4;
+	/**
+	 * 手机号码与用户名不匹配
+	 */
+	public static final int MOBILE_PHONE_NO_MATCH_USERNAME = 5;
+	/**
+	 * 验证码失效
+	 */
+	public static final int MOBILE_PHONE_INVALID = 6;
 	
 	/**
 	 * 商铺列表每次请求条数

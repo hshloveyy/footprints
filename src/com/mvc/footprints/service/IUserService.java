@@ -1,6 +1,7 @@
 package com.mvc.footprints.service;
 
 import com.mvc.footprints.entity.PreUcenterMembers;
+import com.mvc.footprints.entity.TPhoneCode;
 import com.mvc.footprints.resultmap.JsonResult;
 
 public interface IUserService {
@@ -38,4 +39,14 @@ public interface IUserService {
 	public void savePhoneCode(String phoneNumber, String code);
 
 	public PreUcenterMembers findUserByMobilePhone(String phoneNumber);
+
+	/**
+	 * 根据用户名跟手机号查询用户信息
+	 * @param phoneNumber
+	 * @param userName
+	 * @return
+	 */
+	public PreUcenterMembers findUserByMobilePhoneAndUsername(
+			String phoneNumber, String userName);
+	
 }

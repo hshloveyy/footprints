@@ -2,6 +2,7 @@ package com.mvc.footprints.controller;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.util.Date;
 
 import net.sf.json.JSONObject;
 
@@ -16,8 +17,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.mvc.footprints.constant.Constant;
 import com.mvc.footprints.entity.PreUcenterMembers;
 import com.mvc.footprints.entity.TCity;
+import com.mvc.footprints.entity.TPhoneCode;
 import com.mvc.footprints.resultmap.JsonResult;
 import com.mvc.footprints.service.ICityService;
+import com.mvc.footprints.service.IPhoneCodeService;
 import com.mvc.footprints.service.IUserService;
 import com.mvc.footprints.utils.SMSUtils;
 
@@ -30,6 +33,9 @@ public class UserController {
 	
 	@Autowired
 	private ICityService cityService;
+	
+	@Autowired
+	private IPhoneCodeService phoneCodeService;
 
 	@ResponseBody
 	@RequestMapping(value="/test")
@@ -119,12 +125,75 @@ public class UserController {
 	}
 	
 	@ResponseBody
+	@RequestMapping(value="/sendcode")
+	public String sendCode(String phoneNumber) {
+		JsonResult jsonResult = new JsonResult();
+		try {
+			String code = RandomStringUtils.random(6, "0123456789");
+			SMSUtils.sendSMSGetRequest(phoneNumber, String.format(Constant.SMS_MSG, code));
+			userService.savePhoneCode(phoneNumber, code);
+			jsonResult.setCode(Constant.SUCCESS);
+			jsonResult.setMsg("验证码已发送");
+			jsonResult.setResult(true);
+		} catch (IOException e) {
+			e.printStackTrace();
+			jsonResult.setMsg(e.getMessage());
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setResult(false);
+		}
+		return JSONObject.fromObject(jsonResult).toString();
+	}
+	
+	@ResponseBody
+	@RequestMapping("verifycode")
+	public String verifyCode(PreUcenterMembers member){
+		JsonResult jsonResult = new JsonResult();
+		try {
+			TPhoneCode phoneCode = phoneCodeService.verifyCode(member.getMobilePhone(), member.getPhcode());
+			if(phoneCode != null){
+				phoneCode.setStatus(0);
+				phoneCodeService.update(phoneCode);
+				//校验时间
+				Date phoneCodeTime = phoneCode.getTime();
+				Date nowTime = new Date();
+				
+				long subTime = nowTime.getTime() - phoneCodeTime.getTime();
+				
+				if(subTime > (1000 * 60 * 15)){
+					jsonResult.setCode(Constant.MOBILE_PHONE_INVALID);
+					jsonResult.setMsg("验证码已失效");
+					jsonResult.setResult(false);
+				}else{
+					jsonResult.setCode(Constant.SUCCESS);
+					jsonResult.setMsg("验证通过");
+					jsonResult.setResult(true);
+				}
+			}else{
+				jsonResult.setCode(Constant.USER_REGIST_CODE_FIRULE);
+				jsonResult.setMsg("验证码错误");
+				jsonResult.setResult(false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setMsg(e.getMessage());
+			jsonResult.setResult(false);
+		}
+		return JSONObject.fromObject(jsonResult).toString();
+	}
+	
+	@ResponseBody
 	@RequestMapping("update")
 	public String update(PreUcenterMembers member){
 		JsonResult jsonResult = userService.update(member);
 		return JSONObject.fromObject(jsonResult).toString();
 	}
 	
+	@ResponseBody
+	@RequestMapping("resetpassword")
+	public String resetPassword(PreUcenterMembers member){
+		return update(member);
+	}
 	/**
 	 * 获取个人信息
 	 * @param member
