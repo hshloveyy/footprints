@@ -126,7 +126,15 @@ public class UserServiceImpl implements IUserService {
 			//用户名
 			if(StringUtils.isNotBlank(member.getUsername())){
 				String username = new String(member.getUsername().getBytes("iso-8859-1"),"utf-8");
-				ucenterMembers.setUsername(username);
+				PreUcenterMembers preUcenterMembers = preUcenterMemberDao.findByUsername(username);
+				if(preUcenterMembers != null){
+					ucenterMembers.setUsername(username);
+				}else{
+					jsonResult.setMsg("用户名已存在");
+					jsonResult.setResult(false);
+					jsonResult.setCode(2);
+					return jsonResult;
+				}
 			}
 			preUcenterMemberDao.update(ucenterMembers);
 			jsonResult.setObj(ucenterMembers);
