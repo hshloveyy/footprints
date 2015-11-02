@@ -91,7 +91,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	return false;	// 阻止关闭
 		      }
 
-		}); 
+		});
+		
+
+// 		$('#cc').height(document.body.clientHeight);
+// 		$('#cc').layout('resize', {
+// 			width:'100%',
+// 			height:document.body.clientHeight
+// 		})
+// 		$('#tt').tabs('resize');
 	}
 	
 	function loadUrlForm(){
@@ -175,12 +183,12 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </script>
 </head>
 <body>
-<div id="cc" class="easyui-layout" style="width:auto;height:560px;">   
+<div id="cc" class="easyui-layout" style="width:auto;height:1000px;">   
     <div data-options="region:'north',title:'Footprints',split:true" style="height:100px;">
     
     </div>   
     <div data-options="region:'center',title:'足记后台管理'" style="padding:5px;background:#eee;width:auto;">
-	    <div id="tt" style="width:auto;height:450px;">   
+	    <div id="tt" style="width:auto;height:auto;">   
 		    <div title="省份管理" style="padding:20px;display: block;">   
 		        <table id="province_dg"></table>    
 		    </div>   
