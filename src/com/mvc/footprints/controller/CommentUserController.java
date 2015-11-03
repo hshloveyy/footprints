@@ -67,15 +67,15 @@ public class CommentUserController {
 		JsonResult jsonResult = new JsonResult();
 		try {
 			Date now = new Date();
-			if(StringUtils.isNotBlank(commentUser.getContent())){
-				commentUser.setContent(new String(commentUser.getContent().getBytes("iso-8859-1"),"utf-8"));
-			}
+//			if(StringUtils.isNotBlank(commentUser.getContent())){
+//				commentUser.setContent(new String(commentUser.getContent().getBytes("iso-8859-1"),"utf-8"));
+//			}
 			commentUser.setCreateTime(DateFormatUtils.format(now, Constant.DATETIME));
 			commentUser.setMillisecond(now.getTime()+"");
 			
 			//判断是否为当前用户回复当前用户自己的足迹
 			TComment tComment = (TComment) commentService.findById(commentUser.getCommentId() + "");
-			if(tComment != null && tComment.getUserId().equals(commentUser.getFromUser())){
+			if(tComment != null && tComment.getUserId().toString().equals(commentUser.getFromUser())){
 				//标记为删除
 				commentUser.setReadFlag(2);
 			}
