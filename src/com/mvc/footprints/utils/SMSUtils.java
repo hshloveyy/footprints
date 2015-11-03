@@ -26,13 +26,19 @@ public class SMSUtils {
 		//+1(905)923-0240
 //		System.out.println(parseNumber("9059230240"));
 		
+//		try {
+//			Class.forName("com.mysql.jdbc.Driver");
+//			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/isbbsdatabase", "root", "");
+//			System.out.println(conn);
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+		
 		try {
-			Class.forName("com.mysql.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/isbbsdatabase", "root", "");
-			System.out.println(conn);
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
+			sendSMSGetRequest("9059230240", "测试test");
+		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		
