@@ -286,29 +286,10 @@ public class ShopController {
 						}
 					}
 				}
-				int rows = Constant.SHOP_LIST_ROWS;
-				if(source.size() < rows){
-					rows = source.size();
-				}
-				source = source.subList((param.getPage() - 1) * rows, param.getPage() * rows);
 				
-				List<Double> dists = new ArrayList<Double>();
-				Map<Double, TShopInfo> map = new HashMap<Double, TShopInfo>();
-				for (TShopInfo tShopInfo : source) {
-					Double dist = DistanceUtils.getDistance(param
-							.getLongitude().doubleValue(), param.getLatitude()
-							.doubleValue(), Double.valueOf(tShopInfo
-							.getLongitude()), Double.valueOf(tShopInfo
-							.getLatitude()));
-					tShopInfo.setDist(dist.longValue() + "");
-					dists.add(dist);
-					map.put(dist, tShopInfo);
-				}
-				Collections.sort(dists);
-				source.clear();
-				for (Double double1 : dists) {
-					source.add(map.get(double1));
-				}
+				shopSortByDist(param, source);
+				
+				source = pageShop(param, source);
 			}
 			
 			//加载商铺图片和足迹
@@ -526,39 +507,12 @@ public class ShopController {
 				param.setRows(Constant.SHOP_LIST_ROWS);
 				List<TShopInfo> shops = shopService.isbbsShop(param);
 				//加载商铺图片和足迹
-				for (TShopInfo tShopInfo : shops) {
-					List<TFileInfo> images = shopImageService
-							.findFileByShopId(tShopInfo.getId());
-					tShopInfo.setImages(images);
-
-					List<TShopWorktime> worktimes = shopWorktimeService
-							.findWorktimeByShopId(tShopInfo.getId());
-					tShopInfo.setWorktimes(worktimes);
-
-					Long likeCount = shopService
-							.findLikeCountByShopId(tShopInfo.getId());
-					Integer count = likeCount != null ? likeCount.intValue()
-							: 0;
-					tShopInfo.setGood(count);
-					tShopInfo.setLikeCount(count);
-				}
-				List<Double> dists = new ArrayList<Double>();
-				Map<Double, TShopInfo> map = new HashMap<Double, TShopInfo>();
-				for (TShopInfo tShopInfo : shops) {
-					Double dist = DistanceUtils.getDistance(param
-							.getLongitude().doubleValue(), param.getLatitude()
-							.doubleValue(), Double.valueOf(tShopInfo
-							.getLongitude()), Double.valueOf(tShopInfo
-							.getLatitude()));
-					tShopInfo.setDist(dist.longValue() + "");
-					dists.add(dist);
-					map.put(dist, tShopInfo);
-				}
-				Collections.sort(dists);
-				shops.clear();
-				for (Double double1 : dists) {
-					shops.add(map.get(double1));
-				}
+				loadExtract(shops);
+				//排序
+				shopSortByDist(param, shops);
+				
+				shops = pageShop(param, shops);
+				
 				jsonResult.setObj(shops);
 			}else{//附近搜索
 				List<TShopInfo> list = (List<TShopInfo>) shopService.findAll(TShopInfo.class);
@@ -587,30 +541,8 @@ public class ShopController {
 							}
 						}
 					}
-					int rows = Constant.SHOP_LIST_ROWS;
-					if(source.size() < rows){
-						rows = source.size();
-					}
-					//分页
-					source = source.subList((param.getPage() - 1) * rows, param.getPage() * rows);
 					
-					//填充头像，工作时间，点赞数
-					for (TShopInfo tShopInfo : source) {
-						List<TFileInfo> images = shopImageService
-								.findFileByShopId(tShopInfo.getId());
-						tShopInfo.setImages(images);
-
-						List<TShopWorktime> worktimes = shopWorktimeService
-								.findWorktimeByShopId(tShopInfo.getId());
-						tShopInfo.setWorktimes(worktimes);
-
-						Long likeCount = shopService
-								.findLikeCountByShopId(tShopInfo.getId());
-						Integer count = likeCount != null ? likeCount.intValue()
-								: 0;
-						tShopInfo.setGood(count);
-						tShopInfo.setLikeCount(count);
-					}
+					loadExtract(source);
 					
 					//按距离排序
 					List<Double> dists = new ArrayList<Double>();
@@ -630,6 +562,8 @@ public class ShopController {
 						source.add(map.get(double1));
 					}
 					
+					source = pageShop(param, source);
+					
 				}
 				jsonResult.setObj(source);
 			}
@@ -642,6 +576,67 @@ public class ShopController {
 			jsonResult.setResult(false);
 		}
 		return JSONObject.fromObject(jsonResult).toString();
+	}
+
+	/**
+	 * @param param
+	 * @param source
+	 * @return
+	 */
+	private List<TShopInfo> pageShop(ShopParam param, List<TShopInfo> source) {
+		int rows = Constant.SHOP_LIST_ROWS;
+		if(source.size() < rows){
+			rows = source.size();
+		}
+		//分页
+		source = source.subList((param.getPage() - 1) * rows, param.getPage() * rows);
+		return source;
+	}
+
+	/**
+	 * @param shops
+	 */
+	private void loadExtract(List<TShopInfo> shops) {
+		for (TShopInfo tShopInfo : shops) {
+			List<TFileInfo> images = shopImageService
+					.findFileByShopId(tShopInfo.getId());
+			tShopInfo.setImages(images);
+
+			List<TShopWorktime> worktimes = shopWorktimeService
+					.findWorktimeByShopId(tShopInfo.getId());
+			tShopInfo.setWorktimes(worktimes);
+
+			Long likeCount = shopService
+					.findLikeCountByShopId(tShopInfo.getId());
+			Integer count = likeCount != null ? likeCount.intValue()
+					: 0;
+			tShopInfo.setGood(count);
+			tShopInfo.setLikeCount(count);
+		}
+	}
+
+	/**
+	 * @param param
+	 * @param shops
+	 */
+	private void shopSortByDist(ShopParam param, List<TShopInfo> shops) {
+		List<Double> dists = new ArrayList<Double>();
+		Map<Double, TShopInfo> map = new HashMap<Double, TShopInfo>();
+		for (TShopInfo tShopInfo : shops) {
+			Double dist = DistanceUtils.getDistance(param
+					.getLongitude().doubleValue(), param.getLatitude()
+					.doubleValue(), Double.valueOf(tShopInfo
+					.getLongitude()), Double.valueOf(tShopInfo
+					.getLatitude()));
+			tShopInfo.setDist(dist.longValue() + "");
+			dists.add(dist);
+			map.put(dist, tShopInfo);
+		}
+		Collections.sort(dists);
+		shops.clear();
+		for (Double double1 : dists) {
+			shops.add(map.get(double1));
+		}
 	}
 
 	private boolean isDiscount(ShopParam param, TShopInfo tShopInfo) {

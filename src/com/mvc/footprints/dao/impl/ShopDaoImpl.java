@@ -73,8 +73,8 @@ public class ShopDaoImpl extends BaseDaoImpl implements IShopDao {
 				}
 				criteria.addOrder(Order.asc("name"));
 //				System.out.println(param.getPage() + "-" + param.getRows());
-				criteria.setMaxResults(param.getRows());             // 最大显示记录数  
-				criteria.setFirstResult((param.getPage() - 1) * param.getRows()); // 从第几条开始  
+//				criteria.setMaxResults(param.getRows());             // 最大显示记录数  
+//				criteria.setFirstResult((param.getPage() - 1) * param.getRows()); // 从第几条开始  
 				return criteria.list();
 			}
 		});

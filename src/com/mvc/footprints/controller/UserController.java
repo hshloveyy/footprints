@@ -3,6 +3,8 @@ package com.mvc.footprints.controller;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import net.sf.json.JSONObject;
 
@@ -129,12 +131,21 @@ public class UserController {
 	public String sendCode(String phoneNumber) {
 		JsonResult jsonResult = new JsonResult();
 		try {
-			String code = RandomStringUtils.random(6, "0123456789");
-			SMSUtils.sendSMSGetRequest(phoneNumber, String.format(Constant.SMS_MSG, code));
-			userService.savePhoneCode(phoneNumber, code);
-			jsonResult.setCode(Constant.SUCCESS);
-			jsonResult.setMsg("验证码已发送");
-			jsonResult.setResult(true);
+			//通过手机号找用户
+			PreUcenterMembers member = userService.findUserByMobilePhone(phoneNumber);
+			if(member == null){
+				jsonResult.setCode(Constant.FAILURE);
+				jsonResult.setMsg("请使用绑定账号的手机号获取验证码");
+				jsonResult.setResult(false);
+			}else{
+				String code = RandomStringUtils.random(6, "0123456789");
+				String result = SMSUtils.sendSMSGetRequest(phoneNumber, String.format("Test Message：%s", code));
+				System.err.println(result);
+				userService.savePhoneCode(phoneNumber, code);
+				jsonResult.setCode(Constant.SUCCESS);
+				jsonResult.setMsg("验证码已发送");
+				jsonResult.setResult(true);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 			jsonResult.setMsg(e.getMessage());
@@ -164,7 +175,11 @@ public class UserController {
 					jsonResult.setMsg("验证码已失效");
 					jsonResult.setResult(false);
 				}else{
+					member = userService.findUserByMobilePhone(member.getMobilePhone());
 					jsonResult.setCode(Constant.SUCCESS);
+					Map<String, Object> map = new HashMap<String, Object>();
+					map.put("uid", member.getUid());
+					jsonResult.setObj(map);
 					jsonResult.setMsg("验证通过");
 					jsonResult.setResult(true);
 				}
