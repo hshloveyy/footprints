@@ -15,7 +15,7 @@ public class Constant {
 	/**
 	 * 短信验证码内容
 	 */
-	public static final String SMS_MSG = "Thank you for signing up for My Footprints =) Your verification code is %s.";
+	public static final String SMS_MSG = "Your verification code is %s.";
 	
 	/**
 	 * 登录成功
