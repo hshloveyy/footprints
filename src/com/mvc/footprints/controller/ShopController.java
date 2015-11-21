@@ -512,7 +512,9 @@ public class ShopController {
 				shopSortByDist(param, shops);
 				
 				shops = pageShop(param, shops);
-				
+				if(shops == null){
+					jsonResult.setMsg("没有数据了");
+				}
 				jsonResult.setObj(shops);
 			}else{//附近搜索
 				List<TShopInfo> list = (List<TShopInfo>) shopService.findAll(TShopInfo.class);
@@ -586,11 +588,16 @@ public class ShopController {
 	private List<TShopInfo> pageShop(ShopParam param, List<TShopInfo> source) {
 		int page = param.getPage();
 		int rows = Constant.SHOP_LIST_ROWS;
-		if(source.size() < rows * page){
+		int limit = 0;
+		if((page - 1) * rows < source.size() && page * rows < source.size()){//
+			limit = page * rows;
+		}else if((page - 1) * rows < source.size() && page * rows > source.size()){
+			limit = source.size();
+		}else{
 			return new ArrayList<TShopInfo>();
 		}
 		//分页
-		source = source.subList((page - 1) * rows, page * rows);
+		source = source.subList((page - 1) * rows, limit);
 		return source;
 	}
 
