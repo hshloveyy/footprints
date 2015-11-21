@@ -584,12 +584,13 @@ public class ShopController {
 	 * @return
 	 */
 	private List<TShopInfo> pageShop(ShopParam param, List<TShopInfo> source) {
+		int page = param.getPage();
 		int rows = Constant.SHOP_LIST_ROWS;
-		if(source.size() < rows){
-			rows = source.size();
+		if(source.size() < rows * page){
+			return new ArrayList<TShopInfo>();
 		}
 		//分页
-		source = source.subList((param.getPage() - 1) * rows, param.getPage() * rows);
+		source = source.subList((page - 1) * rows, page * rows);
 		return source;
 	}
 

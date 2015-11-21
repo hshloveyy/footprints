@@ -10,6 +10,7 @@ import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.RandomStringUtils;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -139,8 +140,7 @@ public class UserController {
 				jsonResult.setResult(false);
 			}else{
 				String code = RandomStringUtils.random(6, "0123456789");
-				String result = SMSUtils.sendSMSGetRequest(phoneNumber, String.format("Test Message：%s", code));
-				System.err.println(result);
+				String result = SMSUtils.sendSMSGetRequest(phoneNumber, String.format(Constant.SMS_MSG, code));
 				userService.savePhoneCode(phoneNumber, code);
 				jsonResult.setCode(Constant.SUCCESS);
 				jsonResult.setMsg("验证码已发送");
