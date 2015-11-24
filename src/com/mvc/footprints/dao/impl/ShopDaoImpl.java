@@ -17,6 +17,7 @@ import com.mvc.footprints.dao.BaseDaoImpl;
 import com.mvc.footprints.dao.IShopDao;
 import com.mvc.footprints.entity.TShopInfo;
 import com.mvc.footprints.entity.TSubCategory;
+import com.mvc.footprints.param.PagerParam;
 import com.mvc.footprints.param.ShopParam;
 			
 @Repository("shopDao")
@@ -35,7 +36,8 @@ public class ShopDaoImpl extends BaseDaoImpl implements IShopDao {
 				}
 //				criteria.setMaxResults(param.getRows());             // 最大显示记录数  
 //				criteria.setFirstResult((param.getPage() - 1) * param.getRows()); // 从第几条开始  
-				criteria.addOrder(Order.asc("name"));
+				criteria.addOrder(Order.asc("sort"));
+				criteria.addOrder(Order.asc("id"));
 				return criteria.list();
 			}
 		});
@@ -71,10 +73,30 @@ public class ShopDaoImpl extends BaseDaoImpl implements IShopDao {
 						e.printStackTrace();
 					}
 				}
-				criteria.addOrder(Order.asc("name"));
+				criteria.addOrder(Order.asc("sort"));
+				criteria.addOrder(Order.asc("id"));
 //				System.out.println(param.getPage() + "-" + param.getRows());
 //				criteria.setMaxResults(param.getRows());             // 最大显示记录数  
 //				criteria.setFirstResult((param.getPage() - 1) * param.getRows()); // 从第几条开始  
+				return criteria.list();
+			}
+		});
+	}
+	
+	@Override
+	public List<TShopInfo> findAll(final ShopParam param) {
+		return hibernateTemplate.execute(new HibernateCallback<List<TShopInfo>>() {
+			@Override
+			public List<TShopInfo> doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(TShopInfo.class);
+				if(StringUtils.isNotBlank(param.getName())){
+					criteria.add(Restrictions.like("name", "%"+param.getName()+"%"));
+				}
+				criteria.setMaxResults(param.getRows());             // 最大显示记录数  
+				criteria.setFirstResult((param.getPage() - 1) * param.getRows()); // 从第几条开始  
+				criteria.addOrder(Order.asc("sort"));
+				criteria.addOrder(Order.asc("id"));
 				return criteria.list();
 			}
 		});

@@ -40,8 +40,8 @@ public class ShopServiceImpl implements IShopService {
 	private IShopWorktimeDao shopWorktimeDao;
 	
 	@Override
-	public List<?> findAll(Class<?> clazz, PagerParam param) {
-		return shopDao.findAll(clazz, param);
+	public List<TShopInfo> findAll(ShopParam param) {
+		return shopDao.findAll(param);
 	}
 
 	@Override
@@ -173,5 +173,10 @@ public class ShopServiceImpl implements IShopService {
 	@Override
 	public Long findLikeCountByShopId(Integer shopId) {
 		return shopLikeDao.findLikeCountByShopId(shopId);
+	}
+
+	@Override
+	public List<?> findAll(Class<?> clazz, PagerParam param) {
+		return null;
 	}
 }

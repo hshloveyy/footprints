@@ -22,4 +22,6 @@ public interface IShopService extends BaseService{
 
 	Long findLikeCountByShopId(Integer shopId);
 
+	List<TShopInfo> findAll(ShopParam param);
+
 }

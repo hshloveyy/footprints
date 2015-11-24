@@ -77,12 +77,11 @@ public class ShopController {
 	@Autowired
 	private ISubCategoryService subCategoryService;
 
-	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@RequestMapping(value="/list")
 	public String index(ShopParam param){
 		PagerResult result = new PagerResult();
-		List<TShopInfo> list = (List<TShopInfo>) shopService.findAll(TShopInfo.class, param);
+		List<TShopInfo> list = (List<TShopInfo>) shopService.findAll(param);
 		
 		for (TShopInfo tShopInfo : list) {
 			TProvince province = (TProvince) provinceService.findById(tShopInfo.getProvince());
@@ -504,10 +503,8 @@ public class ShopController {
 		JsonResult jsonResult = new JsonResult();
 		try {
 			if (param.getCity() != null && !"0".equals(param.getCity().toString())) {
-				param.setRows(Constant.SHOP_LIST_ROWS);
+				param.setRows(20);
 				List<TShopInfo> shops = shopService.isbbsShop(param);
-				//加载商铺图片和足迹
-				loadExtract(shops);
 				//排序
 				shopSortByDist(param, shops);
 				
@@ -515,6 +512,8 @@ public class ShopController {
 				if(shops == null){
 					jsonResult.setMsg("没有数据了");
 				}
+				//加载商铺图片和足迹
+				loadExtract(shops);
 				jsonResult.setObj(shops);
 			}else{//附近搜索
 				List<TShopInfo> list = (List<TShopInfo>) shopService.findAll(TShopInfo.class);
@@ -544,8 +543,6 @@ public class ShopController {
 						}
 					}
 					
-					loadExtract(source);
-					
 					//按距离排序
 					List<Double> dists = new ArrayList<Double>();
 					Map<Double, TShopInfo> map = new HashMap<Double, TShopInfo>();
@@ -565,7 +562,9 @@ public class ShopController {
 					}
 					
 					source = pageShop(param, source);
-					
+				
+					loadExtract(source);
+
 				}
 				jsonResult.setObj(source);
 			}
@@ -587,7 +586,7 @@ public class ShopController {
 	 */
 	private List<TShopInfo> pageShop(ShopParam param, List<TShopInfo> source) {
 		int page = param.getPage();
-		int rows = Constant.SHOP_LIST_ROWS;
+		int rows = 20;
 		int limit = 0;
 		if((page - 1) * rows < source.size() && page * rows < source.size()){//
 			limit = page * rows;
