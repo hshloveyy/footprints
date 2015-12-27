@@ -18,6 +18,7 @@ public class ShopParam extends PagerParam {
     private String type;//是否优惠
     private String subClass;
     private Integer city;
+    private Integer province;
     
     private String times;
     
@@ -134,37 +135,49 @@ public class ShopParam extends PagerParam {
 	public void setDist(Integer dist) {
 		this.dist = dist;
 	}
+	
+	public Integer getProvince() {
+		return province;
+	}
+
+	public void setProvince(Integer province) {
+		this.province = province;
+	}
 
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("ShopParam : {\n\t\"id\" : \"");
+		builder.append("ShopParam [id=");
 		builder.append(id);
-		builder.append("\", \n\t\"shopId\" : \"");
+		builder.append(", shopId=");
 		builder.append(shopId);
-		builder.append("\", \n\t\"name\" : \"");
+		builder.append(", name=");
 		builder.append(name);
-		builder.append("\", \n\t\"userId\" : \"");
+		builder.append(", userId=");
 		builder.append(userId);
-		builder.append("\", \n\t\"dist\" : \"");
+		builder.append(", dist=");
 		builder.append(dist);
-		builder.append("\", \n\t\"mark\" : \"");
+		builder.append(", mark=");
 		builder.append(mark);
-		builder.append("\", \n\t\"uploadPics\" : \"");
+		builder.append(", uploadPics=");
 		builder.append(uploadPics);
-		builder.append("\", \n\t\"latitude\" : \"");
+		builder.append(", latitude=");
 		builder.append(latitude);
-		builder.append("\", \n\t\"longitude\" : \"");
+		builder.append(", longitude=");
 		builder.append(longitude);
-		builder.append("\", \n\t\"type\" : \"");
+		builder.append(", type=");
 		builder.append(type);
-		builder.append("\", \n\t\"subClass\" : \"");
+		builder.append(", subClass=");
 		builder.append(subClass);
-		builder.append("\", \n\t\"city\" : \"");
+		builder.append(", city=");
 		builder.append(city);
-		builder.append("\", \n\t\"times\" : \"");
+		builder.append(", province=");
+		builder.append(province);
+		builder.append(", times=");
 		builder.append(times);
-		builder.append("\"\n}");
+		builder.append(", category=");
+		builder.append(category);
+		builder.append("]");
 		return builder.toString();
 	}
 	

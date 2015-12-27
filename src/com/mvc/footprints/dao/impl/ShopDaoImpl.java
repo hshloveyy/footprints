@@ -90,8 +90,15 @@ public class ShopDaoImpl extends BaseDaoImpl implements IShopDao {
 			public List<TShopInfo> doInHibernate(Session session)
 					throws HibernateException, SQLException {
 				Criteria criteria = session.createCriteria(TShopInfo.class);
+//				System.err.println(param);
 				if(StringUtils.isNotBlank(param.getName())){
 					criteria.add(Restrictions.like("name", "%"+param.getName()+"%"));
+				}
+				if(null != param.getCity() && param.getCity() != 0){
+					criteria.add(Restrictions.eq("city", param.getCity().toString()));
+				}
+				if(null != param.getProvince() && param.getProvince() != 0){
+					criteria.add(Restrictions.eq("province", param.getProvince().toString()));
 				}
 				criteria.setMaxResults(param.getRows());             // 最大显示记录数  
 				criteria.setFirstResult((param.getPage() - 1) * param.getRows()); // 从第几条开始  
@@ -100,5 +107,31 @@ public class ShopDaoImpl extends BaseDaoImpl implements IShopDao {
 				return criteria.list();
 			}
 		});
+	}
+	
+	@Override
+	public int findAllCount(final ShopParam param) {
+		return hibernateTemplate.execute(new HibernateCallback<List<TShopInfo>>() {
+			@Override
+			public List<TShopInfo> doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(TShopInfo.class);
+//				System.err.println(param);
+				if(StringUtils.isNotBlank(param.getName())){
+					criteria.add(Restrictions.like("name", "%"+param.getName()+"%"));
+				}
+				if(null != param.getCity() && param.getCity() != 0){
+					criteria.add(Restrictions.eq("city", param.getCity().toString()));
+				}
+				if(null != param.getProvince() && param.getProvince() != 0){
+					criteria.add(Restrictions.eq("province", param.getProvince().toString()));
+				}
+				criteria.setMaxResults(param.getRows());             // 最大显示记录数  
+				criteria.setFirstResult((param.getPage() - 1) * param.getRows()); // 从第几条开始  
+				criteria.addOrder(Order.asc("sort"));
+				criteria.addOrder(Order.asc("id"));
+				return criteria.list();
+			}
+		}).size();
 	}
 }

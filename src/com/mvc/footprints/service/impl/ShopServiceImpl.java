@@ -128,7 +128,7 @@ public class ShopServiceImpl implements IShopService {
 
 	@Override
 	public int findAllCount(Class<?> clazz, PagerParam param) {
-		return shopDao.findAllCount(clazz, param);
+		return shopDao.findAllCount((ShopParam) param);
 	}
 	
 	@Override

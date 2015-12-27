@@ -34,6 +34,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <script type="text/javascript">
 	$(function(){
 		loadTabs();
+		
+		$('#selectShop').click(function(){
+			$('#shop_dg').datagrid('load',{
+				name: $('#name').val(),
+				province: $('#province').val(),
+				city: $('#city').val(),
+				page:1
+			});
+		});
 	});
 	
 	//加载选项卡
@@ -180,6 +189,22 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		}
 		$('#comment_dg').datagrid('reload',{commentContent:value});
 	}
+	
+	function loadCitys(){
+		var provinceId = $('#province').val();
+		$('#city option').remove();
+		if(provinceId == 0){
+			$('#city').append('<option value="0">请选择</option>');
+		}else{
+			$.get('province/provinceChild', {id:provinceId}, function(data){
+				$.each(data.obj.citys, function(index, item){
+					$('#city').append('<option value="' + item.id + '">' + item.cityName + '</option>');
+				});
+			
+			}, 'json');
+			
+		}
+	}
 </script>
 </head>
 <body>
@@ -203,9 +228,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    </div>   
 		    <div title="商铺管理" data-options="closable:true" style="padding:20px;"> 
 		    	<div>
-		    		商铺名称：<input type="text" autocomplete="on" autofocus="autofocus" placeholder="商铺名称..."/>
-		    		省份：<input type="text" autocomplete="on" placeholder="省份..."/>
-		    		城市：<input type="text" autocomplete="on" placeholder="城市..."/>
+		    		商铺名称：<input type="text" autocomplete="on" autofocus="autofocus" placeholder="商铺名称..." id="name"/>
+		    		省份：<selectTag:selectTag id="province" type="province" onchange="loadCitys()"/>
+		    		城市：<select id="city"><option value="">请选择</option></select>
+		    		<a class="easyui-linkbutton" href="javascript:void(0);" id="selectShop">查询</a>
 		    	</div>  
 		        <table id="shop_dg"></table> 
 		    </div>   
