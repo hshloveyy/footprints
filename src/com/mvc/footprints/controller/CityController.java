@@ -32,7 +32,7 @@ public class CityController {
 	@RequestMapping(value="/list")
 	public String index(CityParam param){
 		PagerResult result = new PagerResult();
-		List<TCity> list = (List<TCity>) cityService.findAll(TCity.class, param);
+		List<TCity> list = (List<TCity>) cityService.findByProvinceIdPage(param);
 		
 		for (TCity tCity : list) {
 			TProvince province = (TProvince) provinceService.findById(tCity.getProvinceId().toString());

@@ -12,10 +12,10 @@
             <generator class="identity" />
         </id>
         <property name="name" type="java.lang.String">
-            <column name="name" length="10" />
+            <column name="name" length="50" />
         </property>
         <property name="enName" type="java.lang.String">
-            <column name="en_name" length="20" />
+            <column name="en_name" length="50" />
         </property>
         <property name="sort" type="java.lang.Integer">
             <column name="sort" not-null="true" />

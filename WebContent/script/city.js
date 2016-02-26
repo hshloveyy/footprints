@@ -1,7 +1,7 @@
 //加载城市列表
 	function loadCityDg(){
 		$('#city_dg').datagrid({    
-		    url:'city/list',   
+		    url:'city/list?provinceId=' + $('#tableProvince').val(),   
 		    pagination:true,
 		    fitColumns:true,
 		    singleSelect:true,

@@ -217,7 +217,10 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    <div title="省份管理" style="padding:20px;display: block;">   
 		        <table id="province_dg"></table>    
 		    </div>   
-		    <div title="城市管理" data-options="closable:true" style="overflow:auto;padding:20px;">   
+		    <div title="城市管理" data-options="closable:true" style="overflow:auto;padding:20px;">  
+		    	<div>
+		    		省份：<selectTag:selectTag id="tableProvince" type="province" onchange="loadCityDg()"/>
+		    	</div> 
 		       <table id="city_dg"></table> 
 		    </div>   
 		    <div title="类别管理" data-options="closable:true" style="padding:20px;">   
@@ -305,5 +308,6 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 <div id="dd_addAdvert"></div>
 <div id="dd_addNotice"></div>
 <div id="dd_uploadMoreAdvert"></div>
+<div id="dd_messageDetail"></div>
 </body>
 </html>

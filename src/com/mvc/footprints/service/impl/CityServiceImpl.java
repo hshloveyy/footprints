@@ -8,6 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mvc.footprints.dao.ICityDao;
 import com.mvc.footprints.entity.TCity;
+import com.mvc.footprints.param.CityParam;
 import com.mvc.footprints.param.PagerParam;
 import com.mvc.footprints.service.ICityService;
 @Transactional
@@ -57,4 +58,11 @@ public class CityServiceImpl implements ICityService {
 	public List<TCity> findAll(Class<?> clazz) {
 		return (List<TCity>) cityDao.findAll(clazz);
 	}
+
+	@Override
+	public List<TCity> findByProvinceIdPage(CityParam param) {
+		return cityDao.findByProvinceIdPage(param);
+	}
+	
+	
 }

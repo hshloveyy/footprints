@@ -27,6 +27,7 @@
 					    buttons:[{
 							text:'保存',
 							handler:function(){
+								console.log($('#ff_pageProvinceAdd').length);
 								$('#ff_pageProvinceAdd').form('submit',{    
 								    url:'pageprovince/save',    
 								    onSubmit: function(){    

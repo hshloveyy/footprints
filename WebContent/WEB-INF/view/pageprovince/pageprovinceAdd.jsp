@@ -22,7 +22,7 @@ a{
 </style>
 </head>
 <body>
-<form id="ff_provinceAdd" action="" method="post">
+<form id="ff_pageProvinceAdd" action="" method="post">
 	<table>
 		<tr>
 			<td>名称</td>

@@ -7,11 +7,13 @@
 		    singleSelect:true,
 		    striped:true,
 		    columns:[[    
-		        {field:'id',title:'ID',width:100,align:'center'},    
-		        {field:'userName',title:'用户名',width:100,align:'center'},    
-		        {field:'email',title:'邮箱',width:100,align:'center'},    
-		        {field:'theme',title:'主题',width:100,align:'center'},    
-		        {field:'content',title:'内容',width:100,align:'center'}
+		        {field:'id',title:'ID',width:10,align:'center'},    
+		        {field:'userName',title:'用户名',width:30,align:'center'},    
+		        {field:'email',title:'邮箱',width:50,align:'center'},    
+		        {field:'theme',title:'主题',width:50,align:'center'},    
+		        {field:'content',title:'内容',width:100,align:'center',formatter:function(value){
+		        	return '<a href="javascript:loadDetail(\'' + value + '\');">' + value + '</a>';
+		        }}
 		    ]],
 		    toolbar: [{
 		    	text:'删除',
@@ -39,4 +41,24 @@
 			}],
 			loadMsg:'正在加载数据...'
 		}); 
+	}
+	
+	function loadDetail(value){
+		$('#dd_messageDetail').html(value);
+		console.log($('#dd_messageDetail').html());
+		$('#dd_messageDetail').dialog({    
+		    title: '消息详情',    
+		    width: 400,    
+		    height: 200,    
+		    closed: false,    
+		    cache: false,    
+		    content: value,    
+		    modal: true,
+		    buttons:[{
+				text:'关闭',
+				handler:function(){
+					$('#dd_messageDetail').dialog('close');
+				}
+			}]   
+		});    
 	}
