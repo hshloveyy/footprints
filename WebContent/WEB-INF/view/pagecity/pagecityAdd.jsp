@@ -24,9 +24,10 @@ a{
 </head>
 <body>
 <form id="ff_cityAdd" action="" method="post">
+	<input type="hidden" name="type" value="1"/>
 	<table>
 		<tr>
-			<td>名称</td>
+			<td>省份</td>
 			<td><selectTag:selectTag name="provinceId" type="province"/></td>
 		</tr>
 		<tr>

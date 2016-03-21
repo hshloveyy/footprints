@@ -8,7 +8,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mvc.footprints.dao.IShopImageDao;
 import com.mvc.footprints.entity.TFileInfo;
-import com.mvc.footprints.entity.TProvince;
 import com.mvc.footprints.entity.TShopImage;
 import com.mvc.footprints.param.PagerParam;
 import com.mvc.footprints.service.IShopImageService;
@@ -31,7 +30,7 @@ public class ShopImageServiceImpl implements IShopImageService {
 
 	@Override
 	public void delete(String id) {
-		shopImageDao.delete(shopImageDao.findById(TProvince.class, id));
+		shopImageDao.delete(shopImageDao.findById(TShopImage.class, id));
 	}
 
 	@Override
@@ -58,5 +57,11 @@ public class ShopImageServiceImpl implements IShopImageService {
 	@Override
 	public List<TShopImage> findAll(Class<?> clazz) {
 		return (List<TShopImage>) shopImageDao.findAll(clazz);
+	}
+	
+	@Override
+	public void deleteByEncryption(String id) {
+		TShopImage shopImage = shopImageDao.findByEncryption(id);
+		shopImageDao.delete(shopImage);
 	}
 }

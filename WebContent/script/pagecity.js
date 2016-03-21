@@ -27,8 +27,8 @@
 					    buttons:[{
 							text:'保存',
 							handler:function(){
-								$('#ff_pageCityAdd').form('submit',{    
-								    url:'city/save',    
+								$('#ff_cityAdd').form('submit',{    
+								    url:'pagecity/save',    
 								    onSubmit: function(){    
 								        // do some check    
 								        // return false to prevent submit;    

@@ -58,7 +58,10 @@
 					<form id="ff_shopMoreImage1" action="" method="post"
 						enctype="multipart/form-data">
 						<div>
-							<img width="120" height="160" border="1" src="" id="img1" /> <input
+							<img width="120" height="160" border="1" src="" id="img1" /> 
+							<input type="button" value="删除" onclick="deleteImage(1)">
+							<input type="hidden" id="encryption1"/>
+							<input
 								type="file" name="file" accept=".jpg,.png,.bmp"
 								onchange="uploadImg(1)">
 						</div>
@@ -71,7 +74,10 @@
 					<form id="ff_shopMoreImage2" action="" method="post"
 						enctype="multipart/form-data">
 						<div>
-							<img width="120" height="160" border="1" src="" id="img2" /> <input
+							<img width="120" height="160" border="1" src="" id="img2" /> 
+							<input type="button" value="删除" onclick="deleteImage(2)">
+							<input type="hidden" id="encryption2"/>
+							<input
 								type="file" name="file" accept=".jpg,.png,.bmp"
 								onchange="uploadImg(2)">
 						</div>
@@ -86,7 +92,10 @@
 					<form id="ff_shopMoreImage3" action="" method="post"
 						enctype="multipart/form-data">
 						<div>
-							<img width="120" height="160" border="1" src="" id="img3" /> <input
+							<img width="120" height="160" border="1" src="" id="img3" /> 
+							<input type="button" value="删除" onclick="deleteImage(3)">
+							<input type="hidden" id="encryption3"/>
+							<input
 								type="file" name="file" accept=".jpg,.png,.bmp"
 								onchange="uploadImg(3)">
 						</div>
@@ -99,7 +108,10 @@
 					<form id="ff_shopMoreImage4" action="" method="post"
 						enctype="multipart/form-data">
 						<div>
-							<img width="120" height="160" border="1" src="" id="img4" /> <input
+							<img width="120" height="160" border="1" src="" id="img4" /> 
+							<input type="button" value="删除" onclick="deleteImage(4)">
+							<input type="hidden" id="encryption4"/>
+							<input
 								type="file" name="file" accept=".jpg,.png,.bmp"
 								onchange="uploadImg(4)">
 						</div>
@@ -114,7 +126,10 @@
 					<form id="ff_shopMoreImage5" action="" method="post"
 						enctype="multipart/form-data">
 						<div>
-							<img width="120" height="160" border="1" src="" id="img5" /> <input
+							<img width="120" height="160" border="1" src="" id="img5" /> 
+							<input type="button" value="删除" onclick="deleteImage(5)">
+							<input type="hidden" id="encryption5"/>
+							<input
 								type="file" name="file" accept=".jpg,.png,.bmp"
 								onchange="uploadImg(5)">
 						</div>
@@ -127,7 +142,10 @@
 					<form id="ff_shopMoreImage6" action="" method="post"
 						enctype="multipart/form-data">
 						<div>
-							<img width="120" height="160" border="1" src="" id="img6" /> <input
+							<img width="120" height="160" border="1" src="" id="img6" /> 
+							<input type="button" value="删除" onclick="deleteImage(6)">
+							<input type="hidden" id="encryption6"/>
+							<input
 								type="file" name="file" accept=".jpg,.png,.bmp"
 								onchange="uploadImg(6)">
 						</div>

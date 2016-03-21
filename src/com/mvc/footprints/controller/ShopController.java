@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.apache.commons.lang.StringUtils;
@@ -123,6 +124,9 @@ public class ShopController {
 				shop.setIsDiscount(1);
 			}else{
 				shop.setIsDiscount(0);
+			}
+			if(shop.getSort() == null){
+				shop.setSort(9999);
 			}
 			shopService.save(shop);
 			jsonResult.setResult(true);
@@ -708,4 +712,47 @@ public class ShopController {
 		return JSONObject.fromObject(jsonResult).toString();
 	}
 	
+	/**
+	 * 获取商铺图片
+	 * @Title shopImage
+	 * @Description shopImage
+	 * @param param
+	 * @return
+	 * @return String 
+	 * @author heshaohua
+	 * @date 2016年3月7日 下午4:21:18
+	 */
+	@ResponseBody
+	@RequestMapping("shopimage")
+	public String shopImage(ShopParam param){
+		List<TFileInfo> images = shopImageService.findFileByShopId(param.getId());
+		return JSONArray.fromObject(images).toString();
+	}
+	
+	/**
+	 * 删除商铺图片
+	 * @Title shopImage
+	 * @Description shopImage
+	 * @param param
+	 * @return
+	 * @return String 
+	 * @author heshaohua
+	 * @date 2016年3月21日 上午9:49:12
+	 */
+	@ResponseBody
+	@RequestMapping("deleteimage")
+	public String deleteImage(String id){
+		JsonResult jsonResult = new JsonResult();
+		try {
+			shopImageService.deleteByEncryption(id);
+			jsonResult.setCode(Constant.SUCCESS);
+			jsonResult.setResult(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setResult(false);
+			jsonResult.setMsg(e.getMessage());
+		}
+		return JSONObject.fromObject(jsonResult).toString();
+	}
 }

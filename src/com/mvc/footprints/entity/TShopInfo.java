@@ -51,7 +51,7 @@ public class TShopInfo  implements java.io.Serializable {
      @Transient
      private Integer likeCount;
      
-     private Integer sort = 9999;
+     private Integer sort;
 //     private Set<TShopImage> images = new HashSet<TShopImage>();
      private List<TFileInfo> images = new ArrayList<TFileInfo>();
      

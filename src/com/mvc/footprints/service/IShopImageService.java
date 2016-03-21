@@ -8,4 +8,6 @@ import com.mvc.footprints.entity.TFileInfo;
 public interface IShopImageService extends BaseService {
 
 	List<TFileInfo> findFileByShopId(Integer shopId);
+
+	void deleteByEncryption(String id);
 }

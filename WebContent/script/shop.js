@@ -303,6 +303,19 @@
 				cache : false,
 				href : 'shop/uploadmore',
 				modal : true,
+				onLoad:function(){
+					$.get('shop/shopimage',{id:id},function(data){
+						$.each(data, function(index, item){
+							if($('#ff_shopMoreImage' + index).length > 0){
+								$('#img' + index).attr(
+										'src',
+										'fileService/Download?fileId='
+												+ item.encryption + '');
+								$('#encryption' + index).val(item.encryption);
+							}
+						});
+					},'json');
+				},
 				buttons : [{
 					text : '保存',
 					handler : function() {
@@ -381,4 +394,32 @@
 				$('#shop_add_city option[value="' + shopEditCity + '"]').attr('selected','selected');
 			}
 		}, 'json');
+	}
+	
+	function deleteImage(num){
+		if(null == $('#encryption' + num).val() || '' == $('#encryption' + num).val()){
+			alert('请选择图片删除');
+			return;
+		}
+		$.get('shop/deleteimage',{id: $('#encryption' + num).val()},function(data){
+			data = eval('(' + data + ')');
+			if(data.code == '1'){
+				$('#img' + num).attr('src', '');
+				$.messager.show({
+					title : '我的消息',
+					msg : '删除成功',
+					timeout : 5000,
+					showType : 'slide'
+				});
+//				$('#dd_uploadMore').dialog('close');
+			}else{
+				$.messager.show({
+					title : '我的消息',
+					msg : '删除失败',
+					timeout : 5000,
+					showType : 'slide'
+				});
+//				$('#dd_uploadMore').dialog('close');
+			}
+		});
 	}
