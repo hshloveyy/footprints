@@ -43,6 +43,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 				page:1
 			});
 		});
+		
+		$('#selectCity').click(function(){
+			$('#yellowpage_dg').datagrid('load',{
+				name: $('#yname').val(),
+				province: $('#yProvince').val(),
+				city: $('#yCity').val(),
+				page:1
+			});
+		});
 	});
 	
 	//加载选项卡
@@ -190,15 +199,15 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$('#comment_dg').datagrid('reload',{commentContent:value});
 	}
 	
-	function mLoadCitys(){
-		var provinceId = $('#shopProvince').val();
-		$('#city option').remove();
+	function mLoadCitys(id, otherid){
+		var provinceId = $('#' + id).val();
+		$('#' + otherid + ' option').remove();
 		if(provinceId == 0){
-			$('#city').append('<option value="0">请选择</option>');
+			$('#' + otherid).append('<option value="0">请选择</option>');
 		}else{
-			$.get('province/provinceChild', {id:provinceId}, function(data){
+			$.get((id == 'shopProvince' ? 'province' : 'pageprovince') + '/provinceChild', {id:provinceId}, function(data){
 				$.each(data.obj.citys, function(index, item){
-					$('#city').append('<option value="' + item.id + '">' + item.cityName + '</option>');
+					$('#' + otherid).append('<option value="' + item.id + '">' + item.cityName + '</option>');
 				});
 			
 			}, 'json');
@@ -232,7 +241,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    <div title="商铺管理" data-options="closable:true" style="padding:20px;"> 
 		    	<div>
 		    		商铺名称：<input type="text" autocomplete="on" autofocus="autofocus" placeholder="商铺名称..." id="name"/>
-		    		省份：<selectTag:selectTag id="shopProvince" type="province" onchange="mLoadCitys()"/>
+		    		省份：<selectTag:selectTag id="shopProvince" type="province" onchange="mLoadCitys('shopProvince','city')"/>
 		    		城市：<select id="city"><option value="">请选择</option></select>
 		    		<a class="easyui-linkbutton" href="javascript:void(0);" id="selectShop">查询</a>
 		    	</div>  
@@ -245,7 +254,13 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    	</div>  
 		        <table id="comment_dg"></table> 
 		    </div>   
-		    <div title="黄页管理" data-options="closable:true" style="padding:20px;">   
+		    <div title="黄页管理" data-options="closable:true" style="padding:20px;">  
+		    	<div>
+		    		黄页名称：<input type="text" autocomplete="on" autofocus="autofocus" placeholder="黄页名称..." id="yname"/>
+		    		省份：<selectTag:selectTag id="yProvince" type="pageprovince" onchange="mLoadCitys('yProvince','yCity')"/>
+		    		城市：<select id="yCity"><option value="">请选择</option></select>
+		    		<a class="easyui-linkbutton" href="javascript:void(0);" id="selectCity">查询</a>
+		    	</div>   
 		        <table id="yellowpage_dg"></table> 
 		    </div>
 		     <div title="黄页分类管理" data-options="closable:true" style="padding:20px;">   

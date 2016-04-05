@@ -14,13 +14,37 @@ import org.springframework.stereotype.Repository;
 
 import com.mvc.footprints.dao.BaseDaoImpl;
 import com.mvc.footprints.dao.IYellowPageInfoDao;
-import com.mvc.footprints.entity.TShopInfo;
 import com.mvc.footprints.entity.TSubKind;
 import com.mvc.footprints.entity.TYellowPageInfo;
 import com.mvc.footprints.param.YellowPageParam;
 			
 @Repository("yellowPageInfoDao")
 public class YellowPageInfoDaoImpl extends BaseDaoImpl implements IYellowPageInfoDao {
+	
+	@Override
+	public List<TYellowPageInfo> findAll(final YellowPageParam param) {
+		return hibernateTemplate.execute(new HibernateCallback<List<TYellowPageInfo>>() {
+			@Override
+			public List<TYellowPageInfo> doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(TYellowPageInfo.class);
+				if(StringUtils.isNotBlank(param.getName())){
+					criteria.add(Restrictions.like("name", "%"+param.getName()+"%"));
+				}
+				if(null != param.getCity() && Integer.valueOf(param.getCity()) != 0){
+					criteria.add(Restrictions.eq("city", Integer.valueOf(param.getCity())));
+				}
+				if(null != param.getProvince() && Integer.valueOf(param.getProvince()) != 0){
+					criteria.add(Restrictions.eq("province", Integer.valueOf(param.getProvince())));
+				}
+				criteria.setMaxResults(param.getRows());             // 最大显示记录数  
+				criteria.setFirstResult((param.getPage() - 1) * param.getRows()); // 从第几条开始  
+				criteria.addOrder(Order.asc("sort"));
+				criteria.addOrder(Order.asc("id"));
+				return criteria.list();
+			}
+		});
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override

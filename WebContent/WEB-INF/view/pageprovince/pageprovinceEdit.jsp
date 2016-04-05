@@ -22,12 +22,12 @@ a{
 </style>
 </head>
 <body>
-<form id="ff_provinceEdit" action="" method="post">
+<form id="ff_pageProvinceEdit" action="" method="post">
 	<input type="hidden" name="id">
 	<table>
 		<tr>
 			<td>名称</td>
-			<td><input type="text" class="input" name="categoryName"/></td>
+			<td><input type="text" class="input" name="name"/></td>
 		</tr>
 		<tr>
 			<td>排序号</td>

@@ -12,4 +12,6 @@ public interface IYellowPageInfoService extends BaseService{
 
 	List<TYellowPageInfo> findByMark(String mark);
 
+	List<TYellowPageInfo> findAll(YellowPageParam param);
+
 }

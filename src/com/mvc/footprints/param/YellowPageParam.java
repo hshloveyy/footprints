@@ -7,8 +7,26 @@ public class YellowPageParam extends PagerParam {
 	private String subKindId;
 	private String mark;
 	private String city;
+	private String province;
+	private String name;
 	
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getProvince() {
+		return province;
+	}
+
+	public void setProvince(String province) {
+		this.province = province;
+	}
+
 	public String getCity() {
 		return city;
 	}

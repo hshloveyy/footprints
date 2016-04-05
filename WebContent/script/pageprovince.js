@@ -86,6 +86,7 @@
 								        // return false to prevent submit;    
 								    },    
 								    success:function(data){
+								    	data = eval('(' + data + ')');
 								    	$('#dd_addPageProvince').dialog('close');
 								    	$.messager.show({
 								    		title:'我的消息',

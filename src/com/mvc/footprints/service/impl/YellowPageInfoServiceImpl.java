@@ -68,4 +68,9 @@ public class YellowPageInfoServiceImpl implements IYellowPageInfoService {
 	public List<TYellowPageInfo> findAll(Class<?> clazz) {
 		return (List<TYellowPageInfo>) yellowPageInfoDao.findAll(clazz);
 	}
+	
+	@Override
+	public List<TYellowPageInfo> findAll(YellowPageParam param) {
+		return yellowPageInfoDao.findAll(param);
+	}
 }

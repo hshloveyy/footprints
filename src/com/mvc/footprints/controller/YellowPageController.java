@@ -43,12 +43,11 @@ public class YellowPageController {
 	@Autowired
 	private ISubKindService subKindService;
 
-	@SuppressWarnings("unchecked")
 	@ResponseBody
 	@RequestMapping(value="/list")
 	public String index(YellowPageParam param){
 		PagerResult result = new PagerResult();
-		List<TYellowPageInfo> list = (List<TYellowPageInfo>) yellowPageService.findAll(TYellowPageInfo.class, param);
+		List<TYellowPageInfo> list = (List<TYellowPageInfo>) yellowPageService.findAll(param);
 		
 		for (TYellowPageInfo tShopInfo : list) {
 			TPageProvince province = (TPageProvince) provinceService.findById(tShopInfo.getProvince()+"");

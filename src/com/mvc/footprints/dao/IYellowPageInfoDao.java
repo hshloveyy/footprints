@@ -11,4 +11,6 @@ public interface IYellowPageInfoDao extends BaseDao{
 
 	List<TYellowPageInfo> findByMark(String[] marks);
 
+	List<TYellowPageInfo> findAll(YellowPageParam param);
+
 }
