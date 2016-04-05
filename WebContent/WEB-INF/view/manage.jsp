@@ -190,8 +190,8 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		$('#comment_dg').datagrid('reload',{commentContent:value});
 	}
 	
-	function loadCitys(){
-		var provinceId = $('#province').val();
+	function mLoadCitys(){
+		var provinceId = $('#shopProvince').val();
 		$('#city option').remove();
 		if(provinceId == 0){
 			$('#city').append('<option value="0">请选择</option>');
@@ -232,7 +232,7 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 		    <div title="商铺管理" data-options="closable:true" style="padding:20px;"> 
 		    	<div>
 		    		商铺名称：<input type="text" autocomplete="on" autofocus="autofocus" placeholder="商铺名称..." id="name"/>
-		    		省份：<selectTag:selectTag id="province" type="province" onchange="loadCitys()"/>
+		    		省份：<selectTag:selectTag id="shopProvince" type="province" onchange="mLoadCitys()"/>
 		    		城市：<select id="city"><option value="">请选择</option></select>
 		    		<a class="easyui-linkbutton" href="javascript:void(0);" id="selectShop">查询</a>
 		    	</div>  

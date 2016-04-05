@@ -10,10 +10,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mvc.footprints.constant.Constant;
+import com.mvc.footprints.entity.TKind;
+import com.mvc.footprints.entity.TPageCity;
+import com.mvc.footprints.entity.TPageProvince;
+import com.mvc.footprints.entity.TSubKind;
 import com.mvc.footprints.entity.TYellowPageInfo;
 import com.mvc.footprints.param.YellowPageParam;
 import com.mvc.footprints.resultmap.JsonResult;
 import com.mvc.footprints.resultmap.PagerResult;
+import com.mvc.footprints.service.IKindService;
+import com.mvc.footprints.service.IPageCityService;
+import com.mvc.footprints.service.IPageProvinceService;
+import com.mvc.footprints.service.ISubKindService;
 import com.mvc.footprints.service.IYellowPageInfoService;
 
 @Controller
@@ -22,6 +30,18 @@ public class YellowPageController {
 	
 	@Autowired
 	private IYellowPageInfoService yellowPageService;
+	
+	@Autowired
+	private IPageProvinceService provinceService;
+	
+	@Autowired
+	private IPageCityService cityService;
+	
+	@Autowired
+	private IKindService kindService;
+	
+	@Autowired
+	private ISubKindService subKindService;
 
 	@SuppressWarnings("unchecked")
 	@ResponseBody
@@ -29,6 +49,26 @@ public class YellowPageController {
 	public String index(YellowPageParam param){
 		PagerResult result = new PagerResult();
 		List<TYellowPageInfo> list = (List<TYellowPageInfo>) yellowPageService.findAll(TYellowPageInfo.class, param);
+		
+		for (TYellowPageInfo tShopInfo : list) {
+			TPageProvince province = (TPageProvince) provinceService.findById(tShopInfo.getProvince()+"");
+			if(province != null){
+				tShopInfo.setProvinceName(province.getName());
+			}
+			TPageCity city = (TPageCity) cityService.findById(tShopInfo.getCity()+"");
+			if(city != null){
+				tShopInfo.setCityName(city.getCityName());
+			}
+			TKind kind = (TKind) kindService.findById(tShopInfo.getKindId()+"");
+			if(kind != null){
+				tShopInfo.setKindName(kind.getKindName());
+			}
+			TSubKind subKind = (TSubKind) subKindService.findById(tShopInfo.getSubKindId()+"");
+			if(subKind != null){
+				tShopInfo.setSubKindName(subKind.getSubKindName());
+			}
+		}
+		
 		result.setRows(list);
 		
 		int count = yellowPageService.findAllCount(TYellowPageInfo.class, param);

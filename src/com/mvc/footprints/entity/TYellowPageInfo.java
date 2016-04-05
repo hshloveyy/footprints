@@ -29,6 +29,11 @@ public class TYellowPageInfo implements java.io.Serializable {
     private String latitude;
     private String longitude;
 
+	private String provinceName;
+	private String cityName;
+	private String kindName;
+	private String subKindName;
+
 	// Constructors
 
 	/** default constructor */
@@ -178,5 +183,37 @@ public class TYellowPageInfo implements java.io.Serializable {
 	public void setKindId(Integer kindId) {
 		this.kindId = kindId;
 	}
-	
+
+	public String getProvinceName() {
+		return provinceName;
+	}
+
+	public void setProvinceName(String provinceName) {
+		this.provinceName = provinceName;
+	}
+
+	public String getCityName() {
+		return cityName;
+	}
+
+	public void setCityName(String cityName) {
+		this.cityName = cityName;
+	}
+
+	public String getKindName() {
+		return kindName;
+	}
+
+	public void setKindName(String kindName) {
+		this.kindName = kindName;
+	}
+
+	public String getSubKindName() {
+		return subKindName;
+	}
+
+	public void setSubKindName(String subKindName) {
+		this.subKindName = subKindName;
+	}
+
 }

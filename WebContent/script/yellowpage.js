@@ -9,10 +9,10 @@
 		    columns:[[    
 		        {field:'id',title:'ID',width:100,align:'center'},    
 		        {field:'name',title:'名称',width:100,align:'center'},   
-		        {field:'province',title:'省份',width:40,align:'center'},  
-		        {field:'city',title:'城市',width:40,align:'center'},  
-		        {field:'category',title:'分类',width:40,align:'center'},  
-		        {field:'subCategory',title:'子类',width:40,align:'center'},  
+		        {field:'provinceName',title:'省份',width:40,align:'center'},  
+		        {field:'cityName',title:'城市',width:40,align:'center'},  
+		        {field:'kindName',title:'分类',width:40,align:'center'},  
+		        {field:'subKindName',title:'子类',width:40,align:'center'},  
 		        {field:'sort',title:'排序号',width:20,align:'center'}
 		        ] ],
 				toolbar : [

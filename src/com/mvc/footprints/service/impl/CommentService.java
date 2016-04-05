@@ -16,6 +16,7 @@ import com.mvc.footprints.dao.ICommentUserDao;
 import com.mvc.footprints.dao.IPreUcenterMemberDao;
 import com.mvc.footprints.dao.ISignDao;
 import com.mvc.footprints.entity.PreUcenterMembers;
+import com.mvc.footprints.entity.TCategory;
 import com.mvc.footprints.entity.TComment;
 import com.mvc.footprints.entity.TCommentImage;
 import com.mvc.footprints.entity.TCommentLike;
@@ -68,7 +69,7 @@ public class CommentService implements ICommentService {
 
 	@Override
 	public void delete(String id) {
-		commentDao.delete(id);
+		commentDao.delete(commentDao.findById(TComment.class, id));
 	}
 
 	@Override
