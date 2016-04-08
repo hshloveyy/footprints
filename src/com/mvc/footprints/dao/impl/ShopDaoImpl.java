@@ -1,6 +1,7 @@
 package com.mvc.footprints.dao.impl;
 
 import java.io.UnsupportedEncodingException;
+import java.math.BigInteger;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -110,28 +111,35 @@ public class ShopDaoImpl extends BaseDaoImpl implements IShopDao {
 	
 	@Override
 	public int findAllCount(final ShopParam param) {
-		return hibernateTemplate.execute(new HibernateCallback<List<TShopInfo>>() {
+		return hibernateTemplate.execute(new HibernateCallback<Integer>() {
 			@Override
-			public List<TShopInfo> doInHibernate(Session session)
+			public Integer doInHibernate(Session arg0)
 					throws HibernateException, SQLException {
-				Criteria criteria = session.createCriteria(TShopInfo.class);
-//				System.err.println(param);
-				if(StringUtils.isNotBlank(param.getName())){
-					criteria.add(Restrictions.like("name", "%"+param.getName()+"%"));
-				}
-				if(null != param.getCity() && param.getCity() != 0){
-					criteria.add(Restrictions.eq("city", param.getCity().toString()));
-				}
-				if(null != param.getProvince() && param.getProvince() != 0){
-					criteria.add(Restrictions.eq("province", param.getProvince().toString()));
-				}
-				criteria.setMaxResults(param.getRows());             // 最大显示记录数  
-				criteria.setFirstResult((param.getPage() - 1) * param.getRows()); // 从第几条开始  
-				criteria.addOrder(Order.asc("sort"));
-				criteria.addOrder(Order.asc("id"));
-				return criteria.list();
+				return ((BigInteger)arg0.createSQLQuery("select count(1) from t_shop_info").uniqueResult()).intValue();
 			}
-		}).size();
+		});
+//		return hibernateTemplate.execute(new HibernateCallback<List<TShopInfo>>() {
+//			@Override
+//			public List<TShopInfo> doInHibernate(Session session)
+//					throws HibernateException, SQLException {
+//				Criteria criteria = session.createCriteria(TShopInfo.class);
+//				System.err.println(param);
+//				if(StringUtils.isNotBlank(param.getName())){
+//					criteria.add(Restrictions.like("name", "%"+param.getName()+"%"));
+//				}
+//				if(null != param.getCity() && param.getCity() != 0){
+//					criteria.add(Restrictions.eq("city", param.getCity().toString()));
+//				}
+//				if(null != param.getProvince() && param.getProvince() != 0){
+//					criteria.add(Restrictions.eq("province", param.getProvince().toString()));
+//				}
+//				criteria.setMaxResults(param.getRows());             // 最大显示记录数  
+//				criteria.setFirstResult((param.getPage() - 1) * param.getRows()); // 从第几条开始  
+//				criteria.addOrder(Order.asc("sort"));
+//				criteria.addOrder(Order.asc("id"));
+//				return criteria.list();
+//			}
+//		}).size();
 	}
 	
 	@Override
