@@ -179,4 +179,9 @@ public class ShopServiceImpl implements IShopService {
 	public List<?> findAll(Class<?> clazz, PagerParam param) {
 		return null;
 	}
+	
+	@Override
+	public void deleteByEncryption(String id) {
+		shopDao.deleteByEncryption(id);
+	}
 }

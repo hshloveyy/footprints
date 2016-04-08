@@ -17,7 +17,6 @@ import com.mvc.footprints.dao.BaseDaoImpl;
 import com.mvc.footprints.dao.IShopDao;
 import com.mvc.footprints.entity.TShopInfo;
 import com.mvc.footprints.entity.TSubCategory;
-import com.mvc.footprints.param.PagerParam;
 import com.mvc.footprints.param.ShopParam;
 			
 @Repository("shopDao")
@@ -133,5 +132,21 @@ public class ShopDaoImpl extends BaseDaoImpl implements IShopDao {
 				return criteria.list();
 			}
 		}).size();
+	}
+	
+	@Override
+	public void deleteByEncryption(final String id) {
+		TShopInfo shopInfo = getHibernateTemplate().execute(new HibernateCallback<TShopInfo>() {
+			@Override
+			public TShopInfo doInHibernate(Session session)
+					throws HibernateException, SQLException {
+				Criteria criteria = session.createCriteria(TShopInfo.class);
+				criteria.add(Restrictions.eq("uploadPics", id));
+				return (TShopInfo)criteria.uniqueResult();
+			}
+		});
+		
+		shopInfo.setUploadPics("");
+		getHibernateTemplate().update(shopInfo);
 	}
 }

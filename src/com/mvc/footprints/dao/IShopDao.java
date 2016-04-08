@@ -15,4 +15,6 @@ public interface IShopDao extends BaseDao{
 
 	int findAllCount(ShopParam param);
 
+	void deleteByEncryption(String id);
+
 }

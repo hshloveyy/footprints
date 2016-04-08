@@ -8,7 +8,11 @@
 		    striped:true,
 		    columns:[[    
 		        {field:'id',title:'ID',width:100,align:'center',formatter:function(value, row, index){
-		        	return value + '<img id="img_' + value + '" width="100" height="120" src="fileService/Download?fileId=' + row.uploadPics + '"/>';
+		        	if(row.uploadPics){
+		        		return value + '<img id="img_' + value + '" width="100" height="120" src="fileService/Download?fileId=' + row.uploadPics + '"/><input type="button" onclick="deleteShopImage(\'' + row.uploadPics + '\', ' + value + ')" value="删除图片"/>';
+		        	}else{
+		        		return value + '<img id="img_' + value + '" width="100" height="120"/><input type="button" onclick="deleteShopImage(\'' + row.uploadPics + '\', ' + value + ')" value="删除图片"/>';
+		        	}
 		        }},    
 		        {field:'name',title:'名称',width:100,align:'center'},   
 		        {field:'provinceName',title:'省份',width:40,align:'center'},  
@@ -420,6 +424,36 @@
 					showType : 'slide'
 				});
 //				$('#dd_uploadMore').dialog('close');
+			}
+		});
+	}
+	
+	function deleteShopImage(fileId, num){
+		if(!fileId){
+			$.messager.alert("提示信息", "无图片可删", "error");
+			return ;
+		}
+		$.messager.confirm("提示信息", "确认删除此图片吗?", function(fr){
+			if(fr){
+				$.get('shop/deleteshoppic',{id: fileId},function(data){
+					data = eval('(' + data + ')');
+					if(data.code == '1'){
+						$('#img_' + num).attr('src', '');
+//						$.messager.show({
+//							title : '我的消息',
+//							msg : '删除成功',
+//							timeout : 5000,
+//							showType : 'slide'
+//						});
+					}else{
+						$.messager.show({
+							title : '我的消息',
+							msg : '删除失败',
+							timeout : 5000,
+							showType : 'slide'
+						});
+					}
+				});
 			}
 		});
 	}

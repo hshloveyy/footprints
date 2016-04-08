@@ -24,4 +24,6 @@ public interface IShopService extends BaseService{
 
 	List<TShopInfo> findAll(ShopParam param);
 
+	void deleteByEncryption(String id);
+
 }

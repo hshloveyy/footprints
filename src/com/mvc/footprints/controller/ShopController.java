@@ -755,4 +755,31 @@ public class ShopController {
 		}
 		return JSONObject.fromObject(jsonResult).toString();
 	}
+	
+	/**
+	 * 删除商铺头像
+	 * @Title deleteImage
+	 * @Description deleteImage
+	 * @param id
+	 * @return
+	 * @return String 
+	 * @author heshaohua
+	 * @date 2016年4月8日 上午11:21:07
+	 */
+	@ResponseBody
+	@RequestMapping("deleteshoppic")
+	public String deleteShopPic(String id){
+		JsonResult jsonResult = new JsonResult();
+		try {
+			shopService.deleteByEncryption(id);
+			jsonResult.setCode(Constant.SUCCESS);
+			jsonResult.setResult(true);
+		} catch (Exception e) {
+			e.printStackTrace();
+			jsonResult.setCode(Constant.FAILURE);
+			jsonResult.setResult(false);
+			jsonResult.setMsg(e.getMessage());
+		}
+		return JSONObject.fromObject(jsonResult).toString();
+	}
 }
