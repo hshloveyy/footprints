@@ -3,6 +3,7 @@
 		$('#shop_dg').datagrid({    
 		    url:'shop/list',   
 		    pagination:true,
+		    pageList:[5,10,15,20],
 		    fitColumns:true,
 		    singleSelect:true,
 		    striped:true,
