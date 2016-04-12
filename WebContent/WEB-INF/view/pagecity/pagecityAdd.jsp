@@ -28,7 +28,7 @@ a{
 	<table>
 		<tr>
 			<td>省份</td>
-			<td><selectTag:selectTag name="provinceId" type="province"/></td>
+			<td><selectTag:selectTag name="provinceId" type="pageprovince"/></td>
 		</tr>
 		<tr>
 			<td>名称</td>

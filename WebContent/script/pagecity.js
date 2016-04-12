@@ -8,8 +8,8 @@
 		    striped:true,
 		    columns:[[    
 		        {field:'id',title:'ID',width:100,align:'center'},    
+		        {field:'enName',title:'所属省份',width:100,align:'center'},    
 		        {field:'cityName',title:'名称',width:100,align:'center'},    
-		        {field:'enName',title:'英文名',width:100,align:'center'},    
 		        {field:'sort',title:'排序号',width:100,align:'center'}
 		    ]],
 		    toolbar: [{

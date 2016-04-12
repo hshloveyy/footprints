@@ -10,10 +10,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mvc.footprints.entity.TPageCity;
+import com.mvc.footprints.entity.TPageProvince;
 import com.mvc.footprints.param.CityParam;
 import com.mvc.footprints.resultmap.JsonResult;
 import com.mvc.footprints.resultmap.PagerResult;
 import com.mvc.footprints.service.IPageCityService;
+import com.mvc.footprints.service.IPageProvinceService;
 
 @Controller
 @RequestMapping("pagecity")
@@ -21,6 +23,9 @@ public class PageCityController {
 	
 	@Autowired
 	private IPageCityService pageCityService;
+	
+	@Autowired
+	private IPageProvinceService pageProvinceService;
 
 	@SuppressWarnings("unchecked")
 	@ResponseBody
@@ -28,6 +33,16 @@ public class PageCityController {
 	public String index(CityParam param){
 		PagerResult result = new PagerResult();
 		List<TPageCity> list = (List<TPageCity>) pageCityService.findAll(TPageCity.class, param);
+		
+		for (TPageCity tPageCity : list) {
+			TPageProvince pageProvince = (TPageProvince) pageProvinceService.findById(tPageCity.getProvinceId()+"");
+			if(pageProvince != null){
+				tPageCity.setEnName(pageProvince.getName());
+			}else{
+				tPageCity.setEnName("");
+			}
+		}
+		
 		result.setRows(list);
 		
 		int count = pageCityService.findAllCount(TPageCity.class, param);
