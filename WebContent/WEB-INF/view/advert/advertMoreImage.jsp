@@ -50,6 +50,11 @@
 								}
 							});
 		}
+		
+		function deleteImage(id){
+			$('#' + id).removeAttr("src");
+			$('#' + id).parent().parent().next().val('');
+		}
 	</script>
 	<table>
 		<tr>
@@ -58,12 +63,14 @@
 					<form id="ff_advertMoreImage1" action="" method="post"
 						enctype="multipart/form-data">
 						<div>
-							<img width="120" height="160" border="1" src="" id="img1" /> <input
+							<img width="120" height="160" border="1" src="" id="img1" />
+							<input type="button" value="删除" onclick="deleteImage('img1')"/> 
+							<input
 								type="file" name="file" accept=".jpg,.png,.bmp"
 								onchange="uploadImg(1)">
 						</div>
 					</form>
-					<input type="hidden" name="imageId" />
+					<input type="hidden" name="imageId1" />
 				</div>
 			</td>
 			<td>
@@ -71,12 +78,14 @@
 					<form id="ff_advertMoreImage2" action="" method="post"
 						enctype="multipart/form-data">
 						<div>
-							<img width="120" height="160" border="1" src="" id="img2" /> <input
+							<img width="120" height="160" border="1" src="" id="img2" />
+							<input type="button" value="删除" onclick="deleteImage('img2')"/> 
+							<input
 								type="file" name="file" accept=".jpg,.png,.bmp"
 								onchange="uploadImg(2)">
 						</div>
 					</form>
-					<input type="hidden" name="imageId" />
+					<input type="hidden" name="imageId2" />
 				</div>
 			</td>
 		</tr>
@@ -86,12 +95,14 @@
 					<form id="ff_advertMoreImage3" action="" method="post"
 						enctype="multipart/form-data">
 						<div>
-							<img width="120" height="160" border="1" src="" id="img3" /> <input
+							<img width="120" height="160" border="1" src="" id="img3" />
+							<input type="button" value="删除" onclick="deleteImage('img3')"/> 
+							<input
 								type="file" name="file" accept=".jpg,.png,.bmp"
 								onchange="uploadImg(3)">
 						</div>
 					</form>
-					<input type="hidden" name="imageId" />
+					<input type="hidden" name="imageId3" />
 				</div>
 			</td>
 			<td>

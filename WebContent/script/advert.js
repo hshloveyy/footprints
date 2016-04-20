@@ -19,7 +19,7 @@
 		        }},
 		        {field:'sort',title:'排序号',width:100,align:'center'},
 		        {field:'ul',title:'操作',width:100,align:'center',formatter:function(value, row,index){
-		        	return '<a href="javascript:uploadMoreAdvert(' + row.id + ')">上传多张</a>';
+		        	return '<a href="javascript:uploadMoreAdvert(\'' + row.id + '\')">上传多张</a>';
 		        }}
 		    ]],
 		    toolbar: [{
@@ -153,17 +153,34 @@
 			cache : false,
 			href : 'advert/uploadmoreadvert',
 			modal : true,
+			onLoad:function(){
+				$.get('advert/toEdit',{id:id},function(data){
+					var imageId = null;
+					if(data.imageId){
+						imageId = data.imageId.split(",");
+					};
+					$.each(imageId, function(index, item){
+						if($('#ff_advertMoreImage' + (index+1)).length > 0){
+							$('#img' + (index+1)).attr('src', 'fileService/Download?fileId=' + item);
+							$('input[name="imageId'  + (index+1) + '"]').val(item);
+						}
+					});
+				},'json');
+			},
 			buttons : [{
 				text : '保存',
 				handler : function() {
 					var images = '';
-					$('input[name="imageId"]').each(function(index,item){
+					$('input[name^="imageId"]').each(function(index,item){
 						var imgid = $(item).val();
 						if(imgid){
-							images += (index == 0?'':',') + imgid;
+							images += ',' + imgid;
 						}
+						
 					});
-					
+					if(images && images.length > 0){
+						images = images.substring(1, images.length)
+					}
 					$.post('advert/uploadImages',{
 						id:id,
 						images:images
@@ -191,7 +208,7 @@
 			},{
 				text:'取消',
 				handler:function(){
-					$('#dd_uploadMore').dialog('close');
+					$('#dd_uploadMoreAdvert').dialog('close');
 				}
 			}]
 		});

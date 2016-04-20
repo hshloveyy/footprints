@@ -50,19 +50,19 @@ public class YellowPageController {
 		List<TYellowPageInfo> list = (List<TYellowPageInfo>) yellowPageService.findAll(param);
 		
 		for (TYellowPageInfo tShopInfo : list) {
-			TPageProvince province = (TPageProvince) provinceService.findById(tShopInfo.getProvince()+"");
+			TPageProvince province = (TPageProvince) provinceService.findById(setDefaultValue(tShopInfo.getProvince()));
 			if(province != null){
 				tShopInfo.setProvinceName(province.getName());
 			}
-			TPageCity city = (TPageCity) cityService.findById(tShopInfo.getCity()+"");
+			TPageCity city = (TPageCity) cityService.findById(setDefaultValue(tShopInfo.getCity()));
 			if(city != null){
 				tShopInfo.setCityName(city.getCityName());
 			}
-			TKind kind = (TKind) kindService.findById(tShopInfo.getKindId()+"");
+			TKind kind = (TKind) kindService.findById(setDefaultValue(tShopInfo.getKindId()));
 			if(kind != null){
 				tShopInfo.setKindName(kind.getKindName());
 			}
-			TSubKind subKind = (TSubKind) subKindService.findById(tShopInfo.getSubKindId()+"");
+			TSubKind subKind = (TSubKind) subKindService.findById(setDefaultValue(tShopInfo.getSubKindId()));
 			if(subKind != null){
 				tShopInfo.setSubKindName(subKind.getSubKindName());
 			}
@@ -73,6 +73,16 @@ public class YellowPageController {
 		int count = yellowPageService.findAllCount(TYellowPageInfo.class, param);
 		result.setTotal(count);
 		return JSONObject.fromObject(result).toString();
+	}
+	
+	private String setDefaultValue(Object o){
+		String result = "0";
+		if(o instanceof String || o instanceof Integer){
+			if(o != null){
+				return o.toString();
+			}
+		}
+		return result;
 	}
 	
 	@RequestMapping(value="/toAdd")
