@@ -507,7 +507,7 @@ public class ShopController {
 		JsonResult jsonResult = new JsonResult();
 		try {
 			if (param.getCity() != null && !"0".equals(param.getCity().toString())) {
-				param.setRows(20);
+				param.setRows(Constant.SHOP_LIST_ROWS);
 				List<TShopInfo> shops = shopService.isbbsShop(param);
 				//排序
 				shopSortByDist(param, shops);
