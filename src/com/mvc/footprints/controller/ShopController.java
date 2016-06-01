@@ -590,7 +590,7 @@ public class ShopController {
 	 */
 	private List<TShopInfo> pageShop(ShopParam param, List<TShopInfo> source) {
 		int page = param.getPage();
-		int rows = 20;
+		int rows = Constant.SHOP_LIST_ROWS;
 		int limit = 0;
 		if((page - 1) * rows < source.size() && page * rows < source.size()){//
 			limit = page * rows;
